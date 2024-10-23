@@ -2,23 +2,21 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.InputProcessor;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.badlogic.gdx.math.MathUtils;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
+/** {@link ApplicationListener} implementation shared by all platforms. */
 public class Main implements ApplicationListener {
     Texture backgroundTexture;
     Texture bucketTexture;
@@ -51,7 +49,7 @@ public class Main implements ApplicationListener {
         bucketTexture = new Texture("bucket.png");
         dropTexture = new Texture("drop.png");
         daviTexture = new Texture("davi.png");
-        backgroundTexture2 = new Texture("ru.jpg");
+        backgroundTexture2 = new Texture("rupixel.png");
         fichaTexture = new Texture("ficharu.png");
         fichaBoaTexture = new Texture("fichaboa.png");
         dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.mp3"));
@@ -94,15 +92,15 @@ public class Main implements ApplicationListener {
         float delta = Gdx.graphics.getDeltaTime(); // retrieve the current delta
 
         // keyboard controls
-        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
+        if(Gdx.input.isKeyPressed(Keys.RIGHT)){
             // Do something when the user presses the right arrow
             daviSprite.translateX(speed * delta); // Move Davi right
-        } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
+        } else if(Gdx.input.isKeyPressed(Keys.LEFT)){
             // Do something when the user presses the left arrow
             daviSprite.translateX(-speed * delta); // Move Davi left
-        } else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
+        } else if(Gdx.input.isKeyPressed(Keys.UP)){
             daviSprite.translateY(speed/2 * delta); // Move Davi up
-        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
+        } else if(Gdx.input.isKeyPressed(Keys.DOWN)){
             daviSprite.translateY(-speed/2 * delta); // Move Davi up
         }
 

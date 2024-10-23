@@ -10,3 +10,4 @@ music.mp3
 musicru.mp3
 ru.jpg
 rupee.mp3
+rupixel.png
