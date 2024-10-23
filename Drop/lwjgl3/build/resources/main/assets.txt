@@ -1,0 +1,10 @@
+.gitkeep
+background.png
+bucket.png
+davi.png
+drop.mp3
+drop.png
+fichaboa.png
+ficharu.png
+music.mp3
+ru.jpg
