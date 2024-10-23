@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
@@ -42,6 +43,9 @@ public class Main implements ApplicationListener {
     Rectangle daviRectangle;
     Rectangle fichaRectangle;
 
+    int score = 0;
+    BitmapFont font;
+
     @Override
     public void create() {
         // Prepare your application here.
@@ -71,6 +75,9 @@ public class Main implements ApplicationListener {
         music.setLooping(true);
         music.setVolume(.3f);
         music.play();
+
+        font = new BitmapFont();
+        font.setColor(Color.YELLOW);
     }
 
     @Override
@@ -140,6 +147,7 @@ public class Main implements ApplicationListener {
             }else if(daviRectangle.overlaps(fichaRectangle)) { // check if davi overlaps the ficha
                 fichaSprites.removeIndex(i);
                 fichaBoaSound.play(.3f);
+                addScore(1);
             }
         }
 
@@ -175,6 +183,8 @@ public class Main implements ApplicationListener {
             fichaSprite.draw(spriteBatch);
         }
 
+        font.draw(spriteBatch, "SCORE:  " + score, 20, 20);
+
         spriteBatch.end();
     }
 
@@ -203,6 +213,10 @@ public class Main implements ApplicationListener {
         fichaBoaSprite.setX(MathUtils.random(0f, worldWidth - fichaWidth));
         fichaBoaSprite.setY(worldHeight);
         fichaSprites.add(fichaBoaSprite);
+    }
+
+    public void addScore(int valor){
+        score += valor;
     }
 
     @Override
