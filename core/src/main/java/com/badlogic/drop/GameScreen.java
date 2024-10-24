@@ -1,24 +1,22 @@
 package com.badlogic.drop;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
 
-/** {@link ApplicationListener} implementation shared by all platforms. */
-public class Main implements ApplicationListener {
+public class GameScreen implements Screen {
+    final Drop game;
     Texture backgroundTexture;
     Texture bucketTexture;
     Texture dropTexture;
@@ -29,10 +27,6 @@ public class Main implements ApplicationListener {
     Sound dropSound;
     Sound fichaBoaSound;
     Music music;
-
-    SpriteBatch spriteBatch;
-    FitViewport viewport;
-
     Sprite daviSprite;
     Vector2 touchPos;
     Array<Sprite> fichaSprites;
@@ -46,9 +40,10 @@ public class Main implements ApplicationListener {
     int score = 0;
     BitmapFont font;
 
-    @Override
-    public void create() {
-        // Prepare your application here.
+    public GameScreen(final Drop game){
+
+        this.game = game;
+
         backgroundTexture = new Texture("background.png");
         bucketTexture = new Texture("bucket.png");
         dropTexture = new Texture("drop.png");
@@ -63,9 +58,6 @@ public class Main implements ApplicationListener {
         daviSprite = new Sprite(daviTexture); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite
 
-        spriteBatch = new SpriteBatch();
-        viewport = new FitViewport(8,5);
-
         touchPos = new Vector2();
         fichaSprites = new Array<>();
 
@@ -74,20 +66,21 @@ public class Main implements ApplicationListener {
 
         music.setLooping(true);
         music.setVolume(.3f);
-        music.play();
+
 
         font = new BitmapFont();
         font.setColor(Color.YELLOW);
+        font.setUseIntegerPositions(false);
+        font.getData().setScale(game.viewport.getWorldHeight()/Gdx.graphics.getHeight());
     }
 
     @Override
-    public void resize(int width, int height) {
-        // Resize your application here. The parameters represent the new window size.
-        viewport.update(width, height, true); // true center the camera
+    public void show(){
+        music.play();
     }
 
     @Override
-    public void render() {
+    public void render(float delta) {
         // Draw your application here.
         input();
         logic();
@@ -99,15 +92,15 @@ public class Main implements ApplicationListener {
         float delta = Gdx.graphics.getDeltaTime(); // retrieve the current delta
 
         // keyboard controls
-        if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             // Do something when the user presses the right arrow
             daviSprite.translateX(speed * delta); // Move Davi right
-        } else if(Gdx.input.isKeyPressed(Keys.LEFT)){
+        } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             // Do something when the user presses the left arrow
             daviSprite.translateX(-speed * delta); // Move Davi left
-        } else if(Gdx.input.isKeyPressed(Keys.UP)){
+        } else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             daviSprite.translateY(speed/2 * delta); // Move Davi up
-        } else if(Gdx.input.isKeyPressed(Keys.DOWN)){
+        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             daviSprite.translateY(-speed/2 * delta); // Move Davi up
         }
 
@@ -115,7 +108,7 @@ public class Main implements ApplicationListener {
         if(Gdx.input.isTouched()) { // If the user has clicked or tapped the screen
             // React to the player touching the screen
             touchPos.set(Gdx.input.getX(), Gdx.input.getY()); // Get where the touch happened on screen
-            viewport.unproject(touchPos); // Convert the units to the world units of the viewport
+            game.viewport.unproject(touchPos); // Convert the units to the world units of the viewport
             daviSprite.setCenterX(touchPos.x);
             daviSprite.setCenterY(touchPos.y);
         }
@@ -123,8 +116,8 @@ public class Main implements ApplicationListener {
     }
 
     private void logic(){
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
         float daviWidth = daviSprite.getWidth();
         float daviHeight = daviSprite.getHeight();
         float delta = Gdx.graphics.getDeltaTime();
@@ -165,34 +158,34 @@ public class Main implements ApplicationListener {
 
     private void draw(){
         ScreenUtils.clear(Color.BLACK);
-        viewport.apply();
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+        game.viewport.apply();
+        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
-        spriteBatch.begin();
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        game.batch.begin();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
 
         // draw stuff in here
         // 100 pixels = 1 meter
         // the drawing order is the code order
-        spriteBatch.draw(backgroundTexture2, 0, 0, worldWidth, worldHeight); // draw the background
-        daviSprite.draw(spriteBatch);
+        game.batch.draw(backgroundTexture2, 0, 0, worldWidth, worldHeight); // draw the background
+        daviSprite.draw(game.batch);
 
         // desenhando fichas
         for(Sprite fichaSprite : fichaSprites){
-            fichaSprite.draw(spriteBatch);
+            fichaSprite.draw(game.batch);
         }
 
-        font.draw(spriteBatch, "SCORE:  " + score, 20, 20);
+        font.draw(game.batch, "SCORE:  " + score, 7, 4);
 
-        spriteBatch.end();
+        game.batch.end();
     }
 
     private void createFicha(){
         float fichaWidth = 1;
         float fichaHeight = 1;
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
 
         // criando sprite da ficha
         Sprite fichaSprite = new Sprite(fichaTexture);
@@ -205,8 +198,8 @@ public class Main implements ApplicationListener {
     private void createFichaBoa(){
         float fichaWidth = 1;
         float fichaHeight = 1;
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
 
         Sprite fichaBoaSprite = new Sprite(fichaBoaTexture);
         fichaBoaSprite.setSize(fichaWidth, fichaHeight);
@@ -217,6 +210,15 @@ public class Main implements ApplicationListener {
 
     public void addScore(int valor){
         score += valor;
+    }
+
+    @Override
+    public void resize(int width, int height){
+        game.viewport.update(width, height, true);
+    }
+
+    @Override
+    public void hide(){
     }
 
     @Override
@@ -231,6 +233,15 @@ public class Main implements ApplicationListener {
 
     @Override
     public void dispose() {
-        // Destroy application's resources here.
+        backgroundTexture.dispose();
+        dropSound.dispose();
+        music.dispose();
+        dropTexture.dispose();
+        daviTexture.dispose();
+        bucketTexture.dispose();
+        backgroundTexture2.dispose();
+        fichaBoaSound.dispose();
+        fichaBoaTexture.dispose();
+        fichaTexture.dispose();
     }
 }
