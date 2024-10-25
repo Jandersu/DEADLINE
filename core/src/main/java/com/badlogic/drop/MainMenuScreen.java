@@ -2,33 +2,85 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
     final Drop game;
+    Stage stage;
+    TextureAtlas buttonAtlas;
 
     public MainMenuScreen(final Drop game) {
         this.game = game;
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
+
+        CriarBotao botaoJogar = new CriarBotao("MINIGAME", buttonAtlas);
+        TextButton jogarBotao = botaoJogar.getBotao();
+
+        CriarBotao botaoSair = new CriarBotao("SAIR", buttonAtlas);
+        TextButton sairBotao = botaoSair.getBotao();
+
+        //Adiciona acoes e efeitos de hover ao botão "Jogar"
+        jogarBotao.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.setScreen(new GameScreen(game));
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                jogarBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("hover-button"));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                jogarBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("botao-normal"));
+            }
+        });
+
+        //Adiciona acoes e efeitos de hover ao botão "Sair"
+        sairBotao.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Gdx.app.exit();
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                sairBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("hover-button"));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                sairBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("botao-normal"));
+            }
+        });
+
+        //Organizar os botões em uma tabela
+        Table table = new Table();
+        table.setFillParent(true);
+        table.add(jogarBotao).padBottom(10).row();
+        table.add(sairBotao).padBottom(10);
+
+        stage.addActor(table);
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(Color.BLACK);
+       //ScreenUtils.clear(Color.BLACK);
 
-        game.viewport.apply();
-        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-
-        game.batch.begin();
-        //draw text. Remember that x and y are in meters
-        game.font.draw(game.batch, "Welcome to DeadLine MiniGame!!! ", 1, 1.5f);
-        game.font.draw(game.batch, "Tap anywhere to begin!", 1, 1);
-        game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            game.setScreen(new GameScreen(game));
-            dispose();
-        }
+        stage.act(delta);
+        stage.draw();
     }
 
     @Override
@@ -37,7 +89,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        game.viewport.update(width, height, true);
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -57,7 +109,6 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        stage.dispose();
     }
-
 }
