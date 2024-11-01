@@ -12,6 +12,13 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
@@ -30,6 +37,7 @@ public class GameScreen implements Screen {
     Sprite daviSprite;
     Vector2 touchPos;
     Array<Sprite> fichaSprites;
+    Array<Sprite> fichaBoaSprites;
 
     float fichaTimer;
     float fichaTimer2;
@@ -60,13 +68,13 @@ public class GameScreen implements Screen {
 
         touchPos = new Vector2();
         fichaSprites = new Array<>();
+        fichaBoaSprites = new Array<>();
 
         daviRectangle = new Rectangle();
         fichaRectangle = new Rectangle();
 
         music.setLooping(true);
         music.setVolume(.3f);
-
 
         font = new BitmapFont();
         font.setColor(Color.YELLOW);
@@ -102,6 +110,8 @@ public class GameScreen implements Screen {
             daviSprite.translateY(speed/2 * delta); // Move Davi up
         } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             daviSprite.translateY(-speed/2 * delta); // Move Davi up
+        } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            game.setScreen(new MainMenuScreen(game));
         }
 
         // mouse and touch controls
@@ -127,30 +137,34 @@ public class GameScreen implements Screen {
 
         daviRectangle.set(daviSprite.getX(), daviSprite.getY(),daviWidth, daviHeight);
 
-        for(int i = fichaSprites.size - 1; i>=0; i--){
+        for (int i = fichaSprites.size - 1; i >= 0; i--) {
             Sprite fichaSprite = fichaSprites.get(i);
-            float fichaWidth = fichaSprite.getWidth();
-            float fichaHeight = fichaSprite.getHeight();
-
             fichaSprite.translateY(-2f * delta);
-            fichaRectangle.set(fichaSprite.getX(), fichaSprite.getY(),fichaWidth, fichaHeight);
+            fichaRectangle.set(fichaSprite.getX(), fichaSprite.getY(), fichaSprite.getWidth(), fichaSprite.getHeight());
 
-            if(fichaSprite.getY() < -fichaHeight){
+            if (fichaSprite.getY() < -fichaSprite.getHeight()) {
                 fichaSprites.removeIndex(i);
-            }else if(daviRectangle.overlaps(fichaRectangle)) { // check if davi overlaps the ficha
+            } else if (daviRectangle.overlaps(fichaRectangle)) { // Checar colisão
                 fichaSprites.removeIndex(i);
-                fichaBoaSound.play(.3f);
-                addScore(1);
+
+                // Diferenciar com base no tamanho da ficha
+                if (fichaSprite.getWidth() > 1) {  // Supondo que fichas boas são maiores
+                    fichaBoaSound.play(.3f);
+                    addScore(1); // Incrementa o placar para fichas boas
+                } else {
+                    dropSound.play(.3f);
+                    addScore(-1); // Reduz o placar para fichas normais
+                }
             }
         }
 
         fichaTimer += delta;
         fichaTimer2 += delta;
-        if(fichaTimer > 1.5f){ // Check if it has been more than a second
+        if(fichaTimer > 1f){ // Check if it has been more than a second
             fichaTimer = 0; // Reset the timer
             createFicha(); // Create a ficha
         }
-        if(fichaTimer2 > 3f){ // Check if it has been more than a second
+        if(fichaTimer2 > 4f){ // Check if it has been more than a second
             fichaTimer2 = 0; // Reset the timer
             createFichaBoa(); // Create a ficha
         }
@@ -196,7 +210,7 @@ public class GameScreen implements Screen {
     }
 
     private void createFichaBoa(){
-        float fichaWidth = 1;
+        float fichaWidth = 1.01f;
         float fichaHeight = 1;
         float worldWidth = game.viewport.getWorldWidth();
         float worldHeight = game.viewport.getWorldHeight();
