@@ -34,7 +34,8 @@ public class MainMenuScreen implements Screen {
         jogarBotao.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(new GameScreen(game));
+                //game.setScreen(new GameScreen(game));
+                game.setScreen(new Combate(game));
             }
 
             @Override

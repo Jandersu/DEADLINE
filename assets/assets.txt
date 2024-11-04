@@ -1,5 +1,10 @@
 .gitkeep
+DAVI/Davi_medo.png
+Davi_tiro.png
+Inseguranca_dano.png
+Inseguranca_normal.png
 background.png
+barravida.png
 bucket.png
 buttons/buttons.pack
 buttons/checked-button.png
@@ -13,9 +18,11 @@ fichaboa.png
 ficharu.png
 fontes/n3FT5DaAd92s6h1zbAGtupG6.ttf_0.png
 fontes/pixel.fnt
+inseguranca_tiro.png
 music.mp3
 musicru.mp3
 ru.jpg
 rupee.mp3
 rupixel.png
+scopofobia.mp3
 uiskin.json
