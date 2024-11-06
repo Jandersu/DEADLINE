@@ -1,6 +1,7 @@
 package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
@@ -39,6 +40,9 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            game.setScreen(new MainMenuScreen(game));
+        }
         music.play();
     }
 

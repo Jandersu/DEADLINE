@@ -23,7 +23,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameScreen implements Screen {
-    final Drop game;
+    final DeadLine game;
     Texture backgroundTexture;
     Texture bucketTexture;
     Texture dropTexture;

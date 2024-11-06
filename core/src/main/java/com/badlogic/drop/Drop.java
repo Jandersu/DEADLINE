@@ -1,4 +1,4 @@
-package com.badlogic.drop;
+/*package com.badlogic.drop;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -36,4 +36,4 @@ public class Drop extends Game {
         font.dispose();
     }
 
-}
+}*/

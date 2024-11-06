@@ -2,10 +2,13 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -13,21 +16,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
-    final Drop game;
+    final DeadLine game;
     Stage stage;
-    TextureAtlas buttonAtlas;
+    Image image;
 
-    public MainMenuScreen(final Drop game) {
+    public MainMenuScreen(final DeadLine game) {
         this.game = game;
-
         stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-        buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
-        CriarBotao botaoJogar = new CriarBotao("MINIGAME", buttonAtlas);
+        Assets.buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
+
+        // provisorio
+        image = new Image(Assets.backgroundMainMenu);
+        stage.addActor(image);
+
+        CriarBotao botaoJogar = new CriarBotao("NOVO JOGO", Assets.buttonAtlas);
         TextButton jogarBotao = botaoJogar.getBotao();
 
-        CriarBotao botaoSair = new CriarBotao("SAIR", buttonAtlas);
+        CriarBotao botaoSair = new CriarBotao("SAIR", Assets.buttonAtlas);
         TextButton sairBotao = botaoSair.getBotao();
 
         //Adiciona acoes e efeitos de hover ao botão "Jogar"
@@ -40,12 +46,12 @@ public class MainMenuScreen implements Screen {
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                jogarBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("hover-button"));
+                jogarBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("hover-button"));
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                jogarBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("botao-normal"));
+                jogarBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
             }
         });
 
@@ -58,12 +64,12 @@ public class MainMenuScreen implements Screen {
 
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
-                sairBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("hover-button"));
+                sairBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("hover-button"));
             }
 
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
-                sairBotao.getStyle().up = new TextureRegionDrawable(buttonAtlas.findRegion("botao-normal"));
+                sairBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
             }
         });
 
@@ -78,7 +84,15 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-       //ScreenUtils.clear(Color.BLACK);
+        //ScreenUtils.clear(Color.BLACK);
+        //game.viewport.apply();
+        //game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
+
+        /*game.batch.begin();
+
+        game.batch.draw(background, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
+
+        game.batch.end();*/
 
         stage.act(delta);
         stage.draw();

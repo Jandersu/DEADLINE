@@ -176,7 +176,7 @@ public class Combate implements Screen{
                 daviSprite.setColor(Color.RED);
                 danoDaviSound.play(.3f);
                 vida -= 1;
-                if(vida < 0){
+                if(vida <= 0){
                     game.setScreen(new GameOverScreen(game));
                     dispose();
                 }

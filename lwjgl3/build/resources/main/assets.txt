@@ -14,6 +14,7 @@ danoDavi.mp3
 davi.png
 drop.mp3
 drop.png
+espiral.png
 fichaboa.png
 ficharu.png
 fontes/n3FT5DaAd92s6h1zbAGtupG6.ttf_0.png
@@ -21,6 +22,7 @@ fontes/pixel.fnt
 inseguranca_tiro.png
 music.mp3
 musicru.mp3
+quarto.png
 ru.jpg
 rupee.mp3
 rupixel.png
