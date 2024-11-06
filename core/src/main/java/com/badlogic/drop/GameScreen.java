@@ -9,6 +9,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
@@ -21,6 +22,9 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+import java.util.Random;
 
 public class GameScreen implements Screen {
     final DeadLine game;
@@ -48,9 +52,16 @@ public class GameScreen implements Screen {
     int score = 0;
     BitmapFont font;
 
-    public GameScreen(final Drop game){
+    Stage stage;
+    TextureAtlas buttonAtlas;
+
+    public GameScreen(final DeadLine game){
 
         this.game = game;
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
         backgroundTexture = new Texture("background.png");
         bucketTexture = new Texture("bucket.png");
@@ -79,7 +90,7 @@ public class GameScreen implements Screen {
         font = new BitmapFont();
         font.setColor(Color.YELLOW);
         font.setUseIntegerPositions(false);
-        font.getData().setScale(game.viewport.getWorldHeight()/Gdx.graphics.getHeight());
+        font.getData().setScale(game.viewport.getWorldHeight()/Gdx.graphics.getHeight()+0.001f);
     }
 
     @Override
@@ -257,5 +268,6 @@ public class GameScreen implements Screen {
         fichaBoaSound.dispose();
         fichaBoaTexture.dispose();
         fichaTexture.dispose();
+        stage.dispose();
     }
 }

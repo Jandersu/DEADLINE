@@ -19,8 +19,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class Combate implements Screen{
-
-    final Drop game;
+    final DeadLine game;
     Texture backgroundTexture;
     Texture daviTexture;
     Texture insegurancaTexture;
@@ -58,7 +57,7 @@ public class Combate implements Screen{
     Stage stage;
     TextureAtlas buttonAtlas;
 
-    public Combate(final Drop game){
+    public Combate(final DeadLine game){
 
         this.game = game;
 

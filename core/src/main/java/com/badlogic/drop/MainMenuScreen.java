@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MainMenuScreen implements Screen {
@@ -41,7 +42,8 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 //game.setScreen(new GameScreen(game));
-                game.setScreen(new Combate(game));
+                //game.setScreen(new Combate(game));
+                game.setScreen(new CutsceneScreen(game));
             }
 
             @Override
@@ -100,11 +102,13 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
+        image.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
     }
 
     @Override
@@ -119,7 +123,7 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void hide() {
-
+        Gdx.input.setInputProcessor(null);
     }
 
     @Override

@@ -11,14 +11,14 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class GameOverScreen implements Screen {
-    final Drop game;
+    final DeadLine game;
     BitmapFont font;
     BitmapFont font2;;
     Texture insegurancaTexture;
     Sprite insegurancaSprite;
     Music music;
 
-    public GameOverScreen(Drop game){
+    public GameOverScreen(DeadLine game){
         this.game = game;
 
         music = Gdx.audio.newMusic(Gdx.files.internal("scopofobia.mp3"));
