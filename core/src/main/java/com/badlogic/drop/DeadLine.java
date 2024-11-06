@@ -7,8 +7,8 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class DeadLine extends Game {
-    //public final static int WIDTH = 800;
-    //public final static int HEIGHT = 600;
+    public final static int WIDTH = 800;
+    public final static int HEIGHT = 600;
     private  MainMenuScreen mainMenuScreen;
     /*private CutsceneScreen cutsceneScreen;
     private Combate combate;*/

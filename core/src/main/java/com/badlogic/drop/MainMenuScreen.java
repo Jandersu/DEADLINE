@@ -14,22 +14,21 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MainMenuScreen implements Screen {
     final DeadLine game;
     Stage stage;
-    Image image;
+    //Image image;
+    Texture backgroundMainMenu;
 
     public MainMenuScreen(final DeadLine game) {
         this.game = game;
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
 
         Assets.buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
-        // provisorio
-        image = new Image(Assets.backgroundMainMenu);
-        stage.addActor(image);
+        backgroundMainMenu = new Texture(String.valueOf(Assets.backgroundMainMenu));
 
         CriarBotao botaoJogar = new CriarBotao("NOVO JOGO", Assets.buttonAtlas);
         TextButton jogarBotao = botaoJogar.getBotao();
@@ -86,15 +85,15 @@ public class MainMenuScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        //ScreenUtils.clear(Color.BLACK);
-        //game.viewport.apply();
-        //game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
+        ScreenUtils.clear(Color.BLACK);
+        stage.getViewport().apply();
+        game.batch.setProjectionMatrix(stage.getViewport().getCamera().combined);
 
-        /*game.batch.begin();
+        game.batch.begin();
 
-        game.batch.draw(background, 0, 0, game.viewport.getWorldWidth(), game.viewport.getWorldHeight());
+        game.batch.draw(Assets.backgroundMainMenu, 0, 0, stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
 
-        game.batch.end();*/
+        game.batch.end();
 
         stage.act(delta);
         stage.draw();
@@ -108,7 +107,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        image.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
+        //image.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
     }
 
     @Override

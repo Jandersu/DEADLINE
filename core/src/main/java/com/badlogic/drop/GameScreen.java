@@ -1,4 +1,4 @@
-package com.badlogic.drop;
+/*package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
@@ -270,4 +270,4 @@ public class GameScreen implements Screen {
         fichaTexture.dispose();
         stage.dispose();
     }
-}
+}*/

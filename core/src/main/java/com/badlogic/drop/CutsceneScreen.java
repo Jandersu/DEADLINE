@@ -3,16 +3,13 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.scenes.scene2d.Action;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.scenes.scene2d.actions.Actions;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class CutsceneScreen implements Screen {
@@ -20,12 +17,27 @@ public class CutsceneScreen implements Screen {
     private float cutsceneTimer;
     Stage stage;
     Image image;
+    private BitmapFont font;
+    private Container<Label> container;
 
     public CutsceneScreen(final DeadLine game) {
         this.game = game;
         stage = new Stage(new ScreenViewport());
         image = new Image(Assets.backgroundCutsceneTeste);
         stage.addActor(image);
+
+        font = new BitmapFont();
+
+        Label text = new Label("TESTE", new Label.LabelStyle(font, Color.YELLOW));
+        container = new Container<Label>(text);
+        container.setTransform(true);
+        container.size(100, 60);
+        container.setOrigin(container.getWidth() / 2, container.getHeight() / 2);
+        container.setPosition(500, 300);
+        container.setScale(1);
+
+        stage.addActor(container);
+        container.addAction(Actions.parallel(Actions.moveTo(500, 300, 2.0f), Actions.scaleTo(3f, 3f, 2.0f)));
     }
 
     @Override
@@ -36,7 +48,6 @@ public class CutsceneScreen implements Screen {
     @Override
     public void render(float delta) {
         logic();
-        draw();
         stage.act(delta);
         stage.draw();
     }
@@ -48,21 +59,6 @@ public class CutsceneScreen implements Screen {
             cutsceneTimer = 0;
             game.setScreen(new Combate(game));
         }
-    }
-
-    public void draw(){
-        /*ScreenUtils.clear(Color.GRAY);
-        game.viewport.apply();
-        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
-
-        game.batch.begin();
-
-        float worldWidth = game.viewport.getWorldWidth();
-        float worldHeight = game.viewport.getWorldHeight();
-
-        game.batch.draw(Assets.backgroundCutsceneTeste, 0, 0, worldWidth, worldHeight);
-
-        game.batch.end();*/
     }
 
     @Override
