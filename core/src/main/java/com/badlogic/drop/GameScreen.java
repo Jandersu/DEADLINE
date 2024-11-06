@@ -1,23 +1,33 @@
-package com.badlogic.drop;
+/*package com.badlogic.drop;
 
-import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.Sprite;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
+import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
+import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-/** {@link ApplicationListener} implementation shared by all platforms. */
-public class Main implements ApplicationListener {
+import java.util.Random;
+
+public class GameScreen implements Screen {
+    final DeadLine game;
     Texture backgroundTexture;
     Texture bucketTexture;
     Texture dropTexture;
@@ -28,13 +38,10 @@ public class Main implements ApplicationListener {
     Sound dropSound;
     Sound fichaBoaSound;
     Music music;
-
-    SpriteBatch spriteBatch;
-    FitViewport viewport;
-
     Sprite daviSprite;
     Vector2 touchPos;
     Array<Sprite> fichaSprites;
+    Array<Sprite> fichaBoaSprites;
 
     float fichaTimer;
     float fichaTimer2;
@@ -42,9 +49,20 @@ public class Main implements ApplicationListener {
     Rectangle daviRectangle;
     Rectangle fichaRectangle;
 
-    @Override
-    public void create() {
-        // Prepare your application here.
+    int score = 0;
+    BitmapFont font;
+
+    Stage stage;
+    TextureAtlas buttonAtlas;
+
+    public GameScreen(final DeadLine game){
+
+        this.game = game;
+
+        stage = new Stage(new ScreenViewport());
+        Gdx.input.setInputProcessor(stage);
+        buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
+
         backgroundTexture = new Texture("background.png");
         bucketTexture = new Texture("bucket.png");
         dropTexture = new Texture("drop.png");
@@ -59,28 +77,29 @@ public class Main implements ApplicationListener {
         daviSprite = new Sprite(daviTexture); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite
 
-        spriteBatch = new SpriteBatch();
-        viewport = new FitViewport(8,5);
-
         touchPos = new Vector2();
         fichaSprites = new Array<>();
+        fichaBoaSprites = new Array<>();
 
         daviRectangle = new Rectangle();
         fichaRectangle = new Rectangle();
 
         music.setLooping(true);
         music.setVolume(.3f);
+
+        font = new BitmapFont();
+        font.setColor(Color.YELLOW);
+        font.setUseIntegerPositions(false);
+        font.getData().setScale(game.viewport.getWorldHeight()/Gdx.graphics.getHeight()+0.001f);
+    }
+
+    @Override
+    public void show(){
         music.play();
     }
 
     @Override
-    public void resize(int width, int height) {
-        // Resize your application here. The parameters represent the new window size.
-        viewport.update(width, height, true); // true center the camera
-    }
-
-    @Override
-    public void render() {
+    public void render(float delta) {
         // Draw your application here.
         input();
         logic();
@@ -92,23 +111,28 @@ public class Main implements ApplicationListener {
         float delta = Gdx.graphics.getDeltaTime(); // retrieve the current delta
 
         // keyboard controls
-        if(Gdx.input.isKeyPressed(Keys.RIGHT)){
+        if(Gdx.input.isKeyPressed(Input.Keys.RIGHT)){
             // Do something when the user presses the right arrow
             daviSprite.translateX(speed * delta); // Move Davi right
-        } else if(Gdx.input.isKeyPressed(Keys.LEFT)){
+        } else if(Gdx.input.isKeyPressed(Input.Keys.LEFT)){
             // Do something when the user presses the left arrow
             daviSprite.translateX(-speed * delta); // Move Davi left
-        } else if(Gdx.input.isKeyPressed(Keys.UP)){
+        } else if(Gdx.input.isKeyPressed(Input.Keys.UP)){
             daviSprite.translateY(speed/2 * delta); // Move Davi up
-        } else if(Gdx.input.isKeyPressed(Keys.DOWN)){
+        } else if(Gdx.input.isKeyPressed(Input.Keys.DOWN)){
             daviSprite.translateY(-speed/2 * delta); // Move Davi up
+        } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
+            game.setScreen(new MainMenuScreen(game));
+        }
+        else if(Gdx.input.isKeyPressed(Input.Keys.M)){
+            game.setScreen(new MainMenuScreen(game));
         }
 
         // mouse and touch controls
         if(Gdx.input.isTouched()) { // If the user has clicked or tapped the screen
             // React to the player touching the screen
             touchPos.set(Gdx.input.getX(), Gdx.input.getY()); // Get where the touch happened on screen
-            viewport.unproject(touchPos); // Convert the units to the world units of the viewport
+            game.viewport.unproject(touchPos); // Convert the units to the world units of the viewport
             daviSprite.setCenterX(touchPos.x);
             daviSprite.setCenterY(touchPos.y);
         }
@@ -116,8 +140,8 @@ public class Main implements ApplicationListener {
     }
 
     private void logic(){
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
         float daviWidth = daviSprite.getWidth();
         float daviHeight = daviSprite.getHeight();
         float delta = Gdx.graphics.getDeltaTime();
@@ -127,29 +151,34 @@ public class Main implements ApplicationListener {
 
         daviRectangle.set(daviSprite.getX(), daviSprite.getY(),daviWidth, daviHeight);
 
-        for(int i = fichaSprites.size - 1; i>=0; i--){
+        for (int i = fichaSprites.size - 1; i >= 0; i--) {
             Sprite fichaSprite = fichaSprites.get(i);
-            float fichaWidth = fichaSprite.getWidth();
-            float fichaHeight = fichaSprite.getHeight();
-
             fichaSprite.translateY(-2f * delta);
-            fichaRectangle.set(fichaSprite.getX(), fichaSprite.getY(),fichaWidth, fichaHeight);
+            fichaRectangle.set(fichaSprite.getX(), fichaSprite.getY(), fichaSprite.getWidth(), fichaSprite.getHeight());
 
-            if(fichaSprite.getY() < -fichaHeight){
+            if (fichaSprite.getY() < -fichaSprite.getHeight()) {
                 fichaSprites.removeIndex(i);
-            }else if(daviRectangle.overlaps(fichaRectangle)) { // check if davi overlaps the ficha
+            } else if (daviRectangle.overlaps(fichaRectangle)) { // Checar colisão
                 fichaSprites.removeIndex(i);
-                fichaBoaSound.play(.3f);
+
+                // Diferenciar com base no tamanho da ficha
+                if (fichaSprite.getWidth() > 1) {  // Supondo que fichas boas são maiores
+                    fichaBoaSound.play(.3f);
+                    addScore(1); // Incrementa o placar para fichas boas
+                } else {
+                    dropSound.play(.3f);
+                    addScore(-1); // Reduz o placar para fichas normais
+                }
             }
         }
 
         fichaTimer += delta;
         fichaTimer2 += delta;
-        if(fichaTimer > 1.5f){ // Check if it has been more than a second
+        if(fichaTimer > 1f){ // Check if it has been more than a second
             fichaTimer = 0; // Reset the timer
             createFicha(); // Create a ficha
         }
-        if(fichaTimer2 > 3f){ // Check if it has been more than a second
+        if(fichaTimer2 > 4f){ // Check if it has been more than a second
             fichaTimer2 = 0; // Reset the timer
             createFichaBoa(); // Create a ficha
         }
@@ -157,32 +186,34 @@ public class Main implements ApplicationListener {
 
     private void draw(){
         ScreenUtils.clear(Color.BLACK);
-        viewport.apply();
-        spriteBatch.setProjectionMatrix(viewport.getCamera().combined);
+        game.viewport.apply();
+        game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
-        spriteBatch.begin();
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        game.batch.begin();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
 
         // draw stuff in here
         // 100 pixels = 1 meter
         // the drawing order is the code order
-        spriteBatch.draw(backgroundTexture2, 0, 0, worldWidth, worldHeight); // draw the background
-        daviSprite.draw(spriteBatch);
+        game.batch.draw(backgroundTexture2, 0, 0, worldWidth, worldHeight); // draw the background
+        daviSprite.draw(game.batch);
 
         // desenhando fichas
         for(Sprite fichaSprite : fichaSprites){
-            fichaSprite.draw(spriteBatch);
+            fichaSprite.draw(game.batch);
         }
 
-        spriteBatch.end();
+        font.draw(game.batch, "SCORE:  " + score, 7, 4);
+
+        game.batch.end();
     }
 
     private void createFicha(){
         float fichaWidth = 1;
         float fichaHeight = 1;
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
 
         // criando sprite da ficha
         Sprite fichaSprite = new Sprite(fichaTexture);
@@ -193,16 +224,30 @@ public class Main implements ApplicationListener {
     }
 
     private void createFichaBoa(){
-        float fichaWidth = 1;
+        float fichaWidth = 1.01f;
         float fichaHeight = 1;
-        float worldWidth = viewport.getWorldWidth();
-        float worldHeight = viewport.getWorldHeight();
+        float worldWidth = game.viewport.getWorldWidth();
+        float worldHeight = game.viewport.getWorldHeight();
 
         Sprite fichaBoaSprite = new Sprite(fichaBoaTexture);
         fichaBoaSprite.setSize(fichaWidth, fichaHeight);
         fichaBoaSprite.setX(MathUtils.random(0f, worldWidth - fichaWidth));
         fichaBoaSprite.setY(worldHeight);
         fichaSprites.add(fichaBoaSprite);
+    }
+
+    public void addScore(int valor){
+        score += valor;
+    }
+
+    @Override
+    public void resize(int width, int height){
+        game.viewport.update(width, height, true);
+    }
+
+    @Override
+    public void hide(){
+        //Gdx.input.setInputProcessor(null);
     }
 
     @Override
@@ -217,6 +262,16 @@ public class Main implements ApplicationListener {
 
     @Override
     public void dispose() {
-        // Destroy application's resources here.
+        backgroundTexture.dispose();
+        dropSound.dispose();
+        music.dispose();
+        dropTexture.dispose();
+        daviTexture.dispose();
+        bucketTexture.dispose();
+        backgroundTexture2.dispose();
+        fichaBoaSound.dispose();
+        fichaBoaTexture.dispose();
+        fichaTexture.dispose();
+        stage.dispose();
     }
-}
+}*/

@@ -1,0 +1,35 @@
+up-button.png
+botao-normal
+  rotate: false
+  xy: 0, 0
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+
+down-button.png
+down-button
+  rotate: false
+  xy: 0, 0
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+
+checked-button.png
+checked-button
+  rotate: false
+  xy: 0, 0
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
+
+hover-button.png
+hover-button
+  rotate: false
+  xy: 0, 0
+  size: 192, 64
+  orig: 192, 64
+  offset: 0, 0
+  index: -1
