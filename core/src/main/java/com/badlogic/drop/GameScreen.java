@@ -124,6 +124,9 @@ public class GameScreen implements Screen {
         } else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
             game.setScreen(new MainMenuScreen(game));
         }
+        else if(Gdx.input.isKeyPressed(Input.Keys.M)){
+            game.setScreen(new MainMenuScreen(game));
+        }
 
         // mouse and touch controls
         if(Gdx.input.isTouched()) { // If the user has clicked or tapped the screen
@@ -244,6 +247,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide(){
+        //Gdx.input.setInputProcessor(null);
     }
 
     @Override

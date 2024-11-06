@@ -40,16 +40,15 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void show() {
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            game.setScreen(new MainMenuScreen(game));
-        }
         music.play();
     }
 
     @Override
     public void render(float v) {
         ScreenUtils.clear(Color.BLACK);
-
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            game.setScreen(new MainMenuScreen(game));
+        }
         game.batch.begin();
         float worldWidth = game.viewport.getWorldWidth();
         float worldHeight = game.viewport.getWorldHeight();

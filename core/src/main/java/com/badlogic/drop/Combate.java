@@ -18,6 +18,10 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import javax.swing.plaf.synth.Region;
+
+import static com.badlogic.drop.Assets.deadlineAtlas;
+
 public class Combate implements Screen{
     final DeadLine game;
     Texture backgroundTexture;
@@ -57,6 +61,8 @@ public class Combate implements Screen{
     Stage stage;
     TextureAtlas buttonAtlas;
 
+    //TextureAtlas.AtlasRegion daviRegion;
+
     public Combate(final DeadLine game){
 
         this.game = game;
@@ -65,10 +71,9 @@ public class Combate implements Screen{
         Gdx.input.setInputProcessor(stage);
         buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
-        //backgroundTexture = new Texture("background.png");
         barraVida = new Texture("barravida.png");
+        //daviRegion = deadlineAtlas.findRegion("Davi_medo");
 
-        daviTexture = new Texture("DAVI/davi_medo.png");
         insegurancaTexture = new Texture("Inseguranca_normal.png");
         daviTiroTexture = new Texture("Davi_tiro.png");
         insegurancaTextureDano = new Texture("Inseguranca_dano.png");
@@ -82,7 +87,7 @@ public class Combate implements Screen{
 
         music = Gdx.audio.newMusic(Gdx.files.internal("scopofobia.mp3"));
 
-        daviSprite = new Sprite(daviTexture); // initialize the sprite based on the texture
+        daviSprite = new Sprite(Assets.jucaRegion); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite
 
         insegurancaSprite = new Sprite(insegurancaTexture);
@@ -318,7 +323,7 @@ public class Combate implements Screen{
         danoSound.dispose();
         tiroSound.dispose();
         insegurancaTextureDano.dispose();
-        daviTexture.dispose();
+        //daviTexture.dispose();
         insegurancaTexture.dispose();
         backgroundTexture2.dispose();
         insegurancaLagrima.dispose();

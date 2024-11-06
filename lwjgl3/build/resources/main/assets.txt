@@ -1,6 +1,8 @@
 .gitkeep
 DAVI/Davi_medo.png
 Davi_tiro.png
+DeadLineAtlas.atlas
+DeadLineAtlas.png
 Inseguranca_dano.png
 Inseguranca_normal.png
 barravida.png
