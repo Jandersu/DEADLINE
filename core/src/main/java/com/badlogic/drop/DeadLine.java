@@ -52,16 +52,18 @@ public class DeadLine extends Game {
         // preferência "Amigo" e atribui à amizade. Caso nenhum valor seja
         // encontrado, atribui "Nenhum".
         String amizade = prefs.getString("Amigo", "Nenhum");
+        Integer progresso = prefs.getInteger("Dia", 1);
 
         // Configura a opção "Amigo" com o valor "Juca".
-        prefs.putString("Amigo", "Thales");
+        prefs.putString("Amigo", "Yuri");
 
-        // Este comando efetivamente salva o que foi feito na linha 56,
+        // Este comando efetivamente salva o que foi feito na linha 57,
         // antes do flush, as alterações ficam salvas no cache.
         prefs.flush();
 
         // Imprime no log o valor da variável amizade.
         Gdx.app.log("Amigo:", amizade );
+        Gdx.app.log("Fase: ", String.valueOf(progresso));
 
 
     }
