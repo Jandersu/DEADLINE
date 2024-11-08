@@ -16,6 +16,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import javax.swing.plaf.synth.Region;
@@ -24,20 +25,14 @@ import static com.badlogic.drop.Assets.deadlineAtlas;
 
 public class Combate implements Screen{
     final DeadLine game;
-    Texture backgroundTexture;
-    Texture daviTexture;
-    Texture insegurancaTexture;
     Texture backgroundTexture2;
     Texture barraVida;
-    Texture insegurancaLagrima;
-    Texture daviTiroTexture;
     Sound danoDaviSound;
     Sound tiroSound;
     Sound danoSound;
     Music music;
     Sprite daviSprite;
     Sprite insegurancaSprite;
-    Texture insegurancaTextureDano;
     Sprite daviTiroSprite;
     Vector2 touchPos;
     Array<Sprite> lagrimaSprites;
@@ -54,32 +49,24 @@ public class Combate implements Screen{
     Rectangle insegurancaRectangle;
     Rectangle tiroRectangle;
 
-    int vida = 1;
+    int vida = 5;
     int vidaInseguranca = 100;
     BitmapFont font;
 
     Stage stage;
     TextureAtlas buttonAtlas;
 
-    //TextureAtlas.AtlasRegion daviRegion;
-
     public Combate(final DeadLine game){
 
         this.game = game;
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
         Gdx.input.setInputProcessor(stage);
         buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
-        barraVida = new Texture("barravida.png");
-        //daviRegion = deadlineAtlas.findRegion("Davi_medo");
-
-        insegurancaTexture = new Texture("Inseguranca_normal.png");
-        daviTiroTexture = new Texture("Davi_tiro.png");
-        insegurancaTextureDano = new Texture("Inseguranca_dano.png");
+        barraVida = Assets.barraVida;
 
         backgroundTexture2 = new Texture("rupixel.png");
-        insegurancaLagrima = new Texture("inseguranca_tiro.png");
 
         danoDaviSound = Gdx.audio.newSound(Gdx.files.internal("danoDavi.mp3"));
         tiroSound = Gdx.audio.newSound(Gdx.files.internal("tiro.mp3"));
@@ -87,10 +74,10 @@ public class Combate implements Screen{
 
         music = Gdx.audio.newMusic(Gdx.files.internal("scopofobia.mp3"));
 
-        daviSprite = new Sprite(Assets.jucaRegion); // initialize the sprite based on the texture
+        daviSprite = new Sprite(Assets.daviMedo); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite
 
-        insegurancaSprite = new Sprite(insegurancaTexture);
+        insegurancaSprite = new Sprite(Assets.insegurancaNormal);
         insegurancaSprite.setSize(3,3);
 
         touchPos = new Vector2();
@@ -146,7 +133,7 @@ public class Combate implements Screen{
             tiroSound.play(.3f);// Create a ficha
         }
         else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            game.setScreen(new MainMenuScreen(game));
+            game.setScreen(new GameOverScreen(game));
         }
     }
 
@@ -181,7 +168,8 @@ public class Combate implements Screen{
                 danoDaviSound.play(.3f);
                 vida -= 1;
                 if(vida <= 0){
-                    game.setScreen(new GameOverScreen(game));
+                    music.stop();
+                    game.setScreen(new GameOverScreen(game));;
                     dispose();
                 }
             }
@@ -199,7 +187,7 @@ public class Combate implements Screen{
                 tiroSprites.removeIndex(i);
                 tomouDano = true;
                 danoTimer = 0f;
-                insegurancaSprite.setTexture(insegurancaTextureDano);
+                insegurancaSprite.setRegion(Assets.insegurancaDano);
                 vidaInseguranca -= 1;
                 if(vidaInseguranca<100)
                     vidaInseguranca = 0;
@@ -210,7 +198,7 @@ public class Combate implements Screen{
         if(tomouDano){
             danoTimer += delta;
             if (danoTimer > 0.5f) {
-                insegurancaSprite.setTexture(insegurancaTexture);
+                insegurancaSprite.setRegion(Assets.insegurancaNormal);
                 tomouDano = false;
             }
         }
@@ -274,7 +262,7 @@ public class Combate implements Screen{
         float worldHeight = game.viewport.getWorldHeight();
 
         // criando sprite da ficha
-        Sprite lagrimaSprite = new Sprite(insegurancaLagrima);
+        Sprite lagrimaSprite = new Sprite(Assets.insegurancaTiro);
         lagrimaSprite.setSize(lagrimaWidth, lagrimaHeight);
         lagrimaSprite.setX(MathUtils.random(0f, worldWidth - lagrimaWidth)); // randomizando posicao da ficha
         lagrimaSprite.setY(worldHeight);
@@ -288,7 +276,7 @@ public class Combate implements Screen{
         //float worldHeight = game.viewport.getWorldHeight();
 
         // criando sprite da ficha
-        daviTiroSprite = new Sprite(daviTiroTexture);
+        daviTiroSprite = new Sprite(Assets.daviTiro);
         daviTiroSprite.setSize(tiroWidth, tiroHeight);
         daviTiroSprite.setX(daviSprite.getX());
         daviTiroSprite.setY(daviSprite.getY()+1);
@@ -322,15 +310,8 @@ public class Combate implements Screen{
         tiroSound.dispose();
         danoSound.dispose();
         tiroSound.dispose();
-        insegurancaTextureDano.dispose();
-        //daviTexture.dispose();
-        insegurancaTexture.dispose();
         backgroundTexture2.dispose();
-        insegurancaLagrima.dispose();
-        insegurancaTextureDano.dispose();
         barraVida.dispose();
-        insegurancaLagrima.dispose();
-        daviTiroTexture.dispose();
         stage.dispose();
     }
 }

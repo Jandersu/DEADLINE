@@ -14,7 +14,7 @@ public class GameOverScreen implements Screen {
     final DeadLine game;
     BitmapFont font;
     BitmapFont font2;;
-    Texture insegurancaTexture;
+    //Texture insegurancaTexture;
     Sprite insegurancaSprite;
     Music music;
 
@@ -33,8 +33,8 @@ public class GameOverScreen implements Screen {
         font2.setUseIntegerPositions(false);
         font2.getData().setScale(game.viewport.getWorldHeight()/ Gdx.graphics.getHeight()+0.003f);
 
-        insegurancaTexture = new Texture("inseguranca_normal.png");
-        insegurancaSprite = new Sprite(insegurancaTexture);
+        //insegurancaTexture = new Texture("inseguranca_normal.png");
+        insegurancaSprite = new Sprite(Assets.insegurancaNormal);
         insegurancaSprite.setSize(3,3);
     }
 
@@ -44,10 +44,11 @@ public class GameOverScreen implements Screen {
     }
 
     @Override
-    public void render(float v) {
+    public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            game.setScreen(new MainMenuScreen(game));
+            music.stop();
+            game.setScreen(DeadLine.ScreenKey.MainMenu);
         }
         game.batch.begin();
         float worldWidth = game.viewport.getWorldWidth();
@@ -61,7 +62,7 @@ public class GameOverScreen implements Screen {
     }
 
     @Override
-    public void resize(int i, int i1) {
+    public void resize(int width, int height) {
 
     }
 
@@ -82,6 +83,6 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        music.dispose();
     }
 }

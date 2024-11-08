@@ -10,7 +10,11 @@ import com.badlogic.gdx.scenes.scene2d.actions.Actions;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+
+/* Acho que fazer essa tela chamar diferentes cutscenes (métodos) baseado num parâmetro pode ser interessante
+   Aí a gente tem a cutscene 1, a cutscene 2, etc etc e chama tudo por essa tela, que é chamada por várias outras */
 
 public class CutsceneScreen implements Screen {
     final DeadLine game;
@@ -20,9 +24,9 @@ public class CutsceneScreen implements Screen {
     private BitmapFont font;
     private Container<Label> container;
 
-    public CutsceneScreen(final DeadLine game) {
+    public CutsceneScreen(final DeadLine game) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
         this.game = game;
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
         image = new Image(Assets.backgroundCutsceneTeste);
         stage.addActor(image);
 
@@ -57,7 +61,7 @@ public class CutsceneScreen implements Screen {
         cutsceneTimer += delta;
         if (cutsceneTimer > 3f) {
             cutsceneTimer = 0;
-            game.setScreen(new Combate(game));
+            game.setScreen(DeadLine.ScreenKey.Hub); // Em diferentes situacoes a tela de cutscene vai para outras telas
         }
     }
 

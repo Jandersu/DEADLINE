@@ -8,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -19,8 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class MainMenuScreen implements Screen {
     final DeadLine game;
     Stage stage;
-    //Image image;
     Texture backgroundMainMenu;
+    int teste = 0;
 
     public MainMenuScreen(final DeadLine game) {
         this.game = game;
@@ -40,9 +39,7 @@ public class MainMenuScreen implements Screen {
         jogarBotao.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                //game.setScreen(new GameScreen(game));
-                //game.setScreen(new Combate(game));
-                game.setScreen(new CutsceneScreen(game));
+                game.setScreen(DeadLine.ScreenKey.Cutscene);
             }
 
             @Override
@@ -95,6 +92,7 @@ public class MainMenuScreen implements Screen {
 
         game.batch.end();
 
+        System.out.println(teste);
         stage.act(delta);
         stage.draw();
     }
@@ -102,12 +100,12 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        teste += 1;
     }
 
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
-        //image.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
     }
 
     @Override
