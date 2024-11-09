@@ -3,6 +3,7 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Container;
@@ -20,24 +21,34 @@ public class CutsceneScreen implements Screen {
     Stage stage;
     Image image;
     private BitmapFont font;
-    private Container<Label> container;
-    private String[] textos = {"Era uma vez", "um menino chamado Davi", ":O"};
-    private Label text;
+    private final Container<Label> container;
+    private final String[] textos;
+    private final Label text;
 
-    public CutsceneScreen(final DeadLine game, DeadLine.ScreenKey cutscene) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
+    private Image caixaDialogo;
+
+    public CutsceneScreen(final DeadLine game, DeadLine.ScreenKey cutscene, String[] texto, Texture imagemBackground) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
         this.game = game;
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
-        image = new Image(Assets.backgroundCutsceneTeste);
+        image = new Image(imagemBackground);
         stage.addActor(image);
+
+        textos = texto;
 
         font = new BitmapFont(Gdx.files.internal("fontes/cut.fnt"));
 
-        text = new Label(textos[textoAtual], new Label.LabelStyle(font, Color.YELLOW));
+        text = new Label(textos[textoAtual], new Label.LabelStyle(font, Color.BLACK));
+
+        Texture caixaTexture = new Texture(Gdx.files.internal("barra_vida.png"));
+        caixaDialogo = new Image(caixaTexture);
+        caixaDialogo.setColor(Color.WHITE);
+
 
         container = new Container<Label>(text);
         container.setTransform(true);
         container.setScale(1);
 
+        stage.addActor(caixaDialogo);
         stage.addActor(container);
         //container.addAction(Actions.parallel(Actions.moveTo(100 , 300, 1.0f), Actions.scaleTo(3f, 3f, 2.0f)));
     }
@@ -55,8 +66,9 @@ public class CutsceneScreen implements Screen {
 
         container.setPosition( //centraliza o container de acordo com a tela
             (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
-            (stage.getViewport().getWorldWidth()  - container.getHeight()) / 2
+            (50)
         );
+        updateCaixaDialogo();
     }
 
     @Override
@@ -81,8 +93,10 @@ public class CutsceneScreen implements Screen {
                 container.setOrigin(container.getWidth() / 2, container.getHeight() / 2);
                 container.setPosition(
                     (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
-                    (stage.getViewport().getWorldHeight() - container.getHeight()) / 2
+                    (50)
                 );
+
+                updateCaixaDialogo();
             }
             else {
                 game.setScreen(DeadLine.ScreenKey.Hub); // Em diferentes situacoes a tela de cutscene vai para outras telas
@@ -97,8 +111,9 @@ public class CutsceneScreen implements Screen {
 
         container.setPosition(
             (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
-            (stage.getViewport().getWorldHeight() - container.getHeight()) / 2
+            (50)
         );
+        updateCaixaDialogo();
     }
 
     @Override
@@ -119,5 +134,14 @@ public class CutsceneScreen implements Screen {
     @Override
     public void dispose() {
 
+    }
+
+    private void updateCaixaDialogo() {
+        caixaDialogo.setSize(container.getWidth() + 600, container.getHeight() + 100);
+
+        caixaDialogo.setPosition(
+            container.getX() - 600 / 2,
+            container.getY() - 100 / 2
+        );
     }
 }

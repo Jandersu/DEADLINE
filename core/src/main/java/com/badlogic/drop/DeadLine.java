@@ -5,6 +5,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class DeadLine extends Game {
@@ -24,6 +25,10 @@ public class DeadLine extends Game {
     public FitViewport viewport;
     public SpriteBatch batch;
 
+    //variaveis cutscene
+    private final String[] textoCutscene1 = {"Era uma vez", "um menino chamado Davi", ":O"};
+    //private final Image imagemBackground1 = new Image(Assets.backgroundCutsceneTeste);
+
     // Variável prefs para controle das preferências de usuário.
     //private Preferences prefs;
 
@@ -40,7 +45,7 @@ public class DeadLine extends Game {
 
         // Inicializando as telas
         mainMenuScreen = new MainMenuScreen(this, ScreenKey.MainMenu);
-        cutsceneScreen = new CutsceneScreen(this, ScreenKey.Cutscene);
+        cutsceneScreen = new CutsceneScreen(this, ScreenKey.Cutscene, textoCutscene1, Assets.backgroundCutsceneTeste);
         hubScreen = new HubScreen(this, ScreenKey.Hub);
         //combatScreen = new Combate(this);
         //gameOverScreen = new GameOverScreen(this);
