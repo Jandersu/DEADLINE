@@ -19,10 +19,13 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class CutsceneScreen implements Screen {
     final DeadLine game;
     private float cutsceneTimer;
+    private int textoAtual = 0;
     Stage stage;
     Image image;
     private BitmapFont font;
     private Container<Label> container;
+    private String[] textos = {"Era uma vez", "um menino chamado Davi", ":O"};
+    private Label text;
 
     public CutsceneScreen(final DeadLine game) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
         this.game = game;
@@ -30,23 +33,33 @@ public class CutsceneScreen implements Screen {
         image = new Image(Assets.backgroundCutsceneTeste);
         stage.addActor(image);
 
-        font = new BitmapFont();
+        font = new BitmapFont(Gdx.files.internal("fontes/cut.fnt"));
 
-        Label text = new Label("TESTE", new Label.LabelStyle(font, Color.YELLOW));
+        text = new Label(textos[textoAtual], new Label.LabelStyle(font, Color.YELLOW));
+
         container = new Container<Label>(text);
         container.setTransform(true);
-        container.size(100, 60);
-        container.setOrigin(container.getWidth() / 2, container.getHeight() / 2);
-        container.setPosition(500, 300);
         container.setScale(1);
 
         stage.addActor(container);
-        container.addAction(Actions.parallel(Actions.moveTo(500, 300, 2.0f), Actions.scaleTo(3f, 3f, 2.0f)));
+        //container.addAction(Actions.parallel(Actions.moveTo(100 , 300, 1.0f), Actions.scaleTo(3f, 3f, 2.0f)));
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        cutsceneTimer = 0;
+        textoAtual = 0;
+        text.setText(textos[textoAtual]);
+
+        //coloca o cantainer no centro
+        container.setSize(text.getWidth(), text.getHeight());
+        container.setOrigin(container.getWidth() / 2, container.getHeight() / 2);
+
+        container.setPosition( //centraliza o container de acordo com a tela
+            (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
+            (stage.getViewport().getWorldWidth()  - container.getHeight()) / 2
+        );
     }
 
     @Override
@@ -61,7 +74,22 @@ public class CutsceneScreen implements Screen {
         cutsceneTimer += delta;
         if (cutsceneTimer > 3f) {
             cutsceneTimer = 0;
-            game.setScreen(DeadLine.ScreenKey.Hub); // Em diferentes situacoes a tela de cutscene vai para outras telas
+
+            textoAtual++;
+            if(textoAtual < textos.length){
+                text.setText(textos[textoAtual]);
+
+                //a cada novo texto, o container vai se "adaptar"
+                container.setSize(text.getWidth(), text.getHeight());
+                container.setOrigin(container.getWidth() / 2, container.getHeight() / 2);
+                container.setPosition(
+                    (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
+                    (stage.getViewport().getWorldHeight() - container.getHeight()) / 2
+                );
+            }
+            else {
+                game.setScreen(DeadLine.ScreenKey.Hub); // Em diferentes situacoes a tela de cutscene vai para outras telas
+            }
         }
     }
 
@@ -69,6 +97,11 @@ public class CutsceneScreen implements Screen {
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
         image.setSize(stage.getViewport().getWorldWidth(), stage.getViewport().getWorldHeight());
+
+        container.setPosition(
+            (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
+            (stage.getViewport().getWorldHeight() - container.getHeight()) / 2
+        );
     }
 
     @Override

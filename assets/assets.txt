@@ -25,6 +25,8 @@ drop.mp3
 drop.png
 fichaboa.png
 ficharu.png
+fontes/LBOmMoDw3kkW6AAPXzzAYSih.ttf_0.png
+fontes/cut.fnt
 fontes/n3FT5DaAd92s6h1zbAGtupG6.ttf_0.png
 fontes/pixel.fnt
 music.mp3
