@@ -15,20 +15,23 @@ public class DeadLine extends Game {
     private MainMenuScreen mainMenuScreen;
     private CutsceneScreen cutsceneScreen;
     private HubScreen hubScreen;
+
     //private Combate combatScreen;
     //private GameOverScreen gameOverScreen;
+    private ConfigScreen configScreen;
 
     public BitmapFont font;
     public FitViewport viewport;
     public SpriteBatch batch;
 
     // Variável prefs para controle das preferências de usuário.
-    private Preferences prefs;
+    //private Preferences prefs;
 
     @Override
     public void create() {
         Assets.load();
-        font = new BitmapFont();
+        Settings.load();
+        font = new BitmapFont(Gdx.files.local("fontes/pixel.fnt"));
         viewport = new FitViewport(8, 6);
         batch = new SpriteBatch();
         // Ajustando a fonte para as dimensoes do viewport
@@ -36,14 +39,16 @@ public class DeadLine extends Game {
         font.getData().setScale(viewport.getWorldHeight() / Gdx.graphics.getHeight());
 
         // Inicializando as telas
-        mainMenuScreen = new MainMenuScreen(this);
-        cutsceneScreen = new CutsceneScreen(this);
-        hubScreen = new HubScreen(this);
+        mainMenuScreen = new MainMenuScreen(this, ScreenKey.MainMenu);
+        cutsceneScreen = new CutsceneScreen(this, ScreenKey.Cutscene);
+        hubScreen = new HubScreen(this, ScreenKey.Hub);
         //combatScreen = new Combate(this);
         //gameOverScreen = new GameOverScreen(this);
+        configScreen = new ConfigScreen(this, ScreenKey.Config);
 
         setScreen(ScreenKey.MainMenu);
 
+        /*
         // Esta linha cria um arquivo .prefs no caminho: C:\Users\Usuario\.prefs
         // O valor passado entre aspas é o nome do arquivo.
         prefs = Gdx.app.getPreferences("com.badlogic.DeadLine.settings");
@@ -64,7 +69,7 @@ public class DeadLine extends Game {
         // Imprime no log o valor da variável amizade.
         Gdx.app.log("Amigo:", amizade );
         Gdx.app.log("Fase: ", String.valueOf(progresso));
-
+        */
 
     }
 
@@ -79,6 +84,9 @@ public class DeadLine extends Game {
             case Hub:
                 setScreen(hubScreen);
                 break;
+            case Config:
+                setScreen(configScreen);
+                break;
             /*case Combat:
                 setScreen(combatScreen);
                 break;
@@ -88,7 +96,11 @@ public class DeadLine extends Game {
         }
     }
 
-    public enum ScreenKey {MainMenu, Cutscene, Hub, Combat, GameOver}
+    public enum ScreenKey {MainMenu, Cutscene, Hub, Combat, GameOver, Config}
+
+    public ConfigScreen getConfigScreen() {
+        return configScreen;
+    }
 
     @Override
     public void dispose(){

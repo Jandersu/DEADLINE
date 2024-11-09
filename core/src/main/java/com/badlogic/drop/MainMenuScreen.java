@@ -3,8 +3,6 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -17,23 +15,25 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class MainMenuScreen implements Screen {
     final DeadLine game;
+    DeadLine.ScreenKey myKey;
     Stage stage;
-    Texture backgroundMainMenu;
-    int teste = 0;
+    //int teste = 0;
 
-    public MainMenuScreen(final DeadLine game) {
+    public MainMenuScreen(final DeadLine game, DeadLine.ScreenKey myKey) {
         this.game = game;
+        this.myKey = myKey;
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
 
-        Assets.buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
-
-        backgroundMainMenu = new Texture(String.valueOf(Assets.backgroundMainMenu));
 
         CriarBotao botaoJogar = new CriarBotao("NOVO JOGO", Assets.buttonAtlas);
         TextButton jogarBotao = botaoJogar.getBotao();
 
+        CriarBotao botaoConfig = new CriarBotao("OPCOES", Assets.buttonAtlas);
+        TextButton configBotao = botaoConfig.getBotao();
+
         CriarBotao botaoSair = new CriarBotao("SAIR", Assets.buttonAtlas);
         TextButton sairBotao = botaoSair.getBotao();
+
 
         //Adiciona acoes e efeitos de hover ao botão "Jogar"
         jogarBotao.addListener(new ClickListener() {
@@ -50,6 +50,25 @@ public class MainMenuScreen implements Screen {
             @Override
             public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
                 jogarBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
+            }
+        });
+
+        //Adiciona acoes e efeitos de hover ao botão "Opcoes"
+        configBotao.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                game.getConfigScreen().setPreviousScreen(myKey);
+                game.setScreen(DeadLine.ScreenKey.Config);
+            }
+
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                configBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("hover-button"));
+            }
+
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                configBotao.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
             }
         });
 
@@ -75,6 +94,7 @@ public class MainMenuScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         table.add(jogarBotao).padBottom(10).row();
+        table.add(configBotao).padBottom(10).row();
         table.add(sairBotao).padBottom(10);
 
         stage.addActor(table);
@@ -92,7 +112,7 @@ public class MainMenuScreen implements Screen {
 
         game.batch.end();
 
-        System.out.println(teste);
+        //System.out.println(teste);
         stage.act(delta);
         stage.draw();
     }
@@ -100,7 +120,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        teste += 1;
+        //teste += 1;
     }
 
     @Override

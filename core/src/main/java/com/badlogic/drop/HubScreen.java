@@ -7,15 +7,17 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Image;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.*;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
+import static com.badlogic.gdx.scenes.scene2d.ui.Table.Debug.table;
+
 public class HubScreen implements Screen {
     final DeadLine game;
+    DeadLine.ScreenKey myKey;
     Stage stage;
     boolean bobo = false;
     float timer;
@@ -26,15 +28,16 @@ public class HubScreen implements Screen {
     Image configButton;
     Image exitButton;
 
-    public HubScreen(final DeadLine game){
+    public HubScreen(final DeadLine game, DeadLine.ScreenKey myKey){
         this.game = game;
+        this.myKey = myKey;
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
 
         // Tabela que adiciona o Davi na tela
         Table table = new Table();
         table.setFillParent(true);
         table.left().bottom();
-        table.setDebug(true); // Debug pra ver as celulas da tabela
+        //table.setDebug(true); // Debug pra ver as celulas da tabela
 
         davi = new Image(Assets.daviNeutro);
         table.add(davi).width(150).height(150);
@@ -52,7 +55,7 @@ public class HubScreen implements Screen {
         Table buttonTable = new Table();
         buttonTable.setFillParent(true);
         buttonTable.right().top();
-        buttonTable.setDebug(true);
+        //buttonTable.setDebug(true);
 
         mapButton = new Image(Assets.mapIcon);
         configButton = new Image(Assets.configIcon);
@@ -77,14 +80,14 @@ public class HubScreen implements Screen {
         studyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Estudar");
                 game.setScreen(new Combate(game));
             }
         });
         configButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Configuracoes");
+                game.getConfigScreen().setPreviousScreen(myKey);
+                game.setScreen(DeadLine.ScreenKey.Config);
             }
         });
         exitButton.addListener(new ClickListener() {
@@ -93,7 +96,6 @@ public class HubScreen implements Screen {
                 game.setScreen(DeadLine.ScreenKey.MainMenu);
             }
         });
-
 
         stage.addActor(table);
         stage.addActor(buttonTable);
