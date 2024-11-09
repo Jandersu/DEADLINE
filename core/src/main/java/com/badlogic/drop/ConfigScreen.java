@@ -19,9 +19,6 @@ public class ConfigScreen implements Screen {
     Stage stage;
     Image exitButton;
 
-    TextButton fontePequena;
-    TextButton fonteMedia;
-    TextButton fonteGrande;
     TextButton somBaixo;
     TextButton somMedio;
     TextButton somAlto;
@@ -45,14 +42,6 @@ public class ConfigScreen implements Screen {
         Table exitTable = new Table();
         exitTable.setFillParent(true);
         exitTable.top().right();
-
-        // Botoes para ajustar o tamanho da Fonte do jogo
-        CriarBotao botao1 = new CriarBotao("PEQUENA", Assets.buttonAtlas);
-        fontePequena = botao1.getBotao();
-        CriarBotao botao2 = new CriarBotao("MEDIA", Assets.buttonAtlas);
-        fonteMedia = botao2.getBotao();
-        CriarBotao botao3 = new CriarBotao("GRANDE", Assets.buttonAtlas);
-        fonteGrande = botao3.getBotao();
 
         // Botoes para ajustar o volume dos SFX do jogo
         CriarBotao botao4 = new CriarBotao("BAIXO", Assets.buttonAtlas);
@@ -82,10 +71,6 @@ public class ConfigScreen implements Screen {
 
         exitTable.add(exitButton).width(50).height(50);
 
-        //table.add(fonteLabel).row();
-        table.add(fontePequena).padBottom(25);
-        table.add(fonteMedia).padBottom(25);
-        table.add(fonteGrande).padBottom(25).row();
         //table.add(somLabel).row();
         table.add(somBaixo).padBottom(25);
         table.add(somMedio).padBottom(25);
@@ -95,7 +80,7 @@ public class ConfigScreen implements Screen {
         table.add(musicaMedia);
         table.add(musicaAlta);
 
-        table.setDebug(true);
+        //table.setDebug(true);
         stage.addActor(exitTable);
         stage.addActor(table);
 
@@ -111,10 +96,6 @@ public class ConfigScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
         stage.getViewport().apply();
-        /*game.batch.setProjectionMatrix(stage.getViewport().getCamera().combined);
-
-        game.batch.begin();
-        game.batch.end();*/
 
         stage.act(delta);
         stage.draw();
@@ -195,6 +176,51 @@ public class ConfigScreen implements Screen {
             }
         });
 
+
+        musicaBaixa.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Settings.volumeMusica = 0.1f;
+            }
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                musicaBaixa.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("hover-button"));
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                musicaBaixa.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
+            }
+        });
+
+        musicaMedia.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Settings.volumeMusica = 0.3f;
+            }
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                musicaMedia.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("hover-button"));
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                musicaMedia.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
+            }
+        });
+
+        musicaAlta.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                Settings.volumeMusica = 1f;
+            }
+            @Override
+            public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {
+                musicaAlta.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("hover-button"));
+            }
+            @Override
+            public void exit(InputEvent event, float x, float y, int pointer, Actor toActor) {
+                musicaAlta.getStyle().up = new TextureRegionDrawable(Assets.buttonAtlas.findRegion("botao-normal"));
+            }
+        });
 
 
 
