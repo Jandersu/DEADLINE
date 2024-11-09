@@ -2,6 +2,7 @@ package com.badlogic.drop;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -25,7 +26,13 @@ public class CutsceneScreen implements Screen {
     private final String[] textos;
     private final Label text;
 
-    private Image caixaDialogo;
+    private final Image caixaDialogo;
+    private String textoCompleto;
+    private int tamanhoTexto = 0;
+    private float tempoDigitar = 0f;
+
+    Sound teclando;
+    Sound musica;
 
     public CutsceneScreen(final DeadLine game, DeadLine.ScreenKey cutscene, String[] texto, Texture imagemBackground) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
         this.game = game;
@@ -33,20 +40,24 @@ public class CutsceneScreen implements Screen {
         image = new Image(imagemBackground);
         stage.addActor(image);
 
+        teclando = Gdx.audio.newSound(Gdx.files.internal("teclando.mp3"));
+        musica = Gdx.audio.newSound(Gdx.files.internal("music_cutscene.mp3"));
+
         textos = texto;
 
         font = new BitmapFont(Gdx.files.internal("fontes/cut.fnt"));
 
-        text = new Label(textos[textoAtual], new Label.LabelStyle(font, Color.BLACK));
+        text = new Label("", new Label.LabelStyle(font, Color.BLACK));
 
         Texture caixaTexture = new Texture(Gdx.files.internal("barra_vida.png"));
         caixaDialogo = new Image(caixaTexture);
         caixaDialogo.setColor(Color.WHITE);
 
-
         container = new Container<Label>(text);
         container.setTransform(true);
         container.setScale(1);
+
+        updateCaixaDialogo();
 
         stage.addActor(caixaDialogo);
         stage.addActor(container);
@@ -55,10 +66,14 @@ public class CutsceneScreen implements Screen {
 
     @Override
     public void show() {
+        musica.play(.2f);
         Gdx.input.setInputProcessor(stage);
         cutsceneTimer = 0;
         textoAtual = 0;
-        text.setText(textos[textoAtual]);
+
+        textoCompleto = textos[textoAtual];
+        tamanhoTexto = 0;
+        text.setText("");
 
         //coloca o cantainer no centro
         container.setSize(text.getWidth(), text.getHeight());
@@ -74,6 +89,7 @@ public class CutsceneScreen implements Screen {
     @Override
     public void render(float delta) {
         logic();
+
         stage.act(delta);
         stage.draw();
     }
@@ -81,12 +97,26 @@ public class CutsceneScreen implements Screen {
     public void logic(){
         float delta = Gdx.graphics.getDeltaTime();
         cutsceneTimer += delta;
-        if (cutsceneTimer > 3f) {
+        tempoDigitar += delta;
+
+        float velocidadeDigitar = 0.05f;
+
+        if(tempoDigitar >= velocidadeDigitar && tamanhoTexto < textoCompleto.length()){
+            tamanhoTexto++;
+            text.setText(textoCompleto.substring(0, tamanhoTexto));
+            tempoDigitar = 0;
+            teclando.play(.3f);
+        }
+
+
+        if (cutsceneTimer >= 2f) {
             cutsceneTimer = 0;
 
             textoAtual++;
             if(textoAtual < textos.length){
-                text.setText(textos[textoAtual]);
+                textoCompleto = textos[textoAtual];
+                tamanhoTexto = 0;
+                text.setText("");
 
                 //a cada novo texto, o container vai se "adaptar"
                 container.setSize(text.getWidth(), text.getHeight());
@@ -99,7 +129,10 @@ public class CutsceneScreen implements Screen {
                 updateCaixaDialogo();
             }
             else {
-                game.setScreen(DeadLine.ScreenKey.Hub); // Em diferentes situacoes a tela de cutscene vai para outras telas
+                musica.stop();
+                teclando.stop();
+                game.setScreen(DeadLine.ScreenKey.Hub);
+                // Em diferentes situacoes a tela de cutscene vai para outras telas
             }
         }
     }
@@ -133,7 +166,12 @@ public class CutsceneScreen implements Screen {
 
     @Override
     public void dispose() {
-
+        //stage.dispose();
+        font.dispose();
+        teclando.dispose();
+        musica.dispose();
+        caixaDialogo.remove();
+        image.remove();
     }
 
     private void updateCaixaDialogo() {

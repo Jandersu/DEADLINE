@@ -30,9 +30,12 @@ fontes/cut.fnt
 fontes/n3FT5DaAd92s6h1zbAGtupG6.ttf_0.png
 fontes/pixel.fnt
 music.mp3
+music_cutscene.mp3
 musicru.mp3
 ru.jpg
 rupee.mp3
 rupixel.png
 scopofobia.mp3
+teclando.mp3
+teclando2.mp3
 tiro.mp3
