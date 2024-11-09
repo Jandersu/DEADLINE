@@ -74,7 +74,8 @@ public class HubScreen implements Screen {
         mapButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Mapa");
+                game.getMapScreen().setPreviousScreen(myKey);
+                game.setScreen(DeadLine.ScreenKey.Map);
             }
         });
         studyButton.addListener(new ClickListener() {

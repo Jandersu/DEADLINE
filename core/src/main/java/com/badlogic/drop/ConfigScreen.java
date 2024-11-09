@@ -121,11 +121,6 @@ public class ConfigScreen implements Screen {
         Gdx.input.setInputProcessor(null);
     }
 
-    @Override
-    public void dispose() {
-        stage.dispose();
-    }
-
     // Trecho muito grande de codigo. Deixaria o construtor lotado de coisa, entao vou fazer separado
     public void configuraBotoes(){
         somBaixo.addListener(new ClickListener() {
@@ -234,6 +229,11 @@ public class ConfigScreen implements Screen {
 
     public void setPreviousScreen(DeadLine.ScreenKey previousScreen) {
         this.previousScreen = previousScreen;
+    }
+
+    @Override
+    public void dispose() {
+        stage.dispose();
     }
 
 }

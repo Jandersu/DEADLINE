@@ -65,12 +65,17 @@ public class Assets {
     // Sprite do Professor
     public static TextureRegion professorTexture;
 
+    // Sprites do Minigame
+    public static TextureRegion ficha15;
+    public static TextureRegion ficha3;
+
     // Icones da UI
     public static TextureRegion configIcon;
     public static TextureRegion studyIcon;
     public static TextureRegion mapIcon;
     public static TextureRegion exitIcon;
     public static TextureRegion exclaimIcon;
+    public static TextureRegion pointIcon;
 
 
     public static void load() {
@@ -129,12 +134,16 @@ public class Assets {
 
         professorTexture = deadlineAtlas.findRegion("Professor");
 
+        ficha15 = deadlineAtlas.findRegion("Ficha15");
+        ficha3 = deadlineAtlas.findRegion("Ficha3");
+
         // Carregando textura dos icones da UI
         configIcon = deadlineAtlas.findRegion("Config_icon");
         studyIcon = deadlineAtlas.findRegion("Study_icon");
         mapIcon = deadlineAtlas.findRegion("Map_icon");
         exitIcon = deadlineAtlas.findRegion("Exit_icon");
         exclaimIcon = deadlineAtlas.findRegion("Exclaim_icon");
+        pointIcon = deadlineAtlas.findRegion("Point_icon");
     }
 
     public static void dispose(){

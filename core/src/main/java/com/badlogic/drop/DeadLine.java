@@ -16,10 +16,10 @@ public class DeadLine extends Game {
     private MainMenuScreen mainMenuScreen;
     private CutsceneScreen cutsceneScreen;
     private HubScreen hubScreen;
-
     //private Combate combatScreen;
     //private GameOverScreen gameOverScreen;
     private ConfigScreen configScreen;
+    private MapScreen mapScreen;
 
     public BitmapFont font;
     public FitViewport viewport;
@@ -50,6 +50,7 @@ public class DeadLine extends Game {
         //combatScreen = new Combate(this);
         //gameOverScreen = new GameOverScreen(this);
         configScreen = new ConfigScreen(this, ScreenKey.Config);
+        mapScreen = new MapScreen(this, ScreenKey.Map);
 
         setScreen(ScreenKey.MainMenu);
 
@@ -92,6 +93,9 @@ public class DeadLine extends Game {
             case Config:
                 setScreen(configScreen);
                 break;
+            case Map:
+                setScreen(mapScreen);
+                break;
             /*case Combat:
                 setScreen(combatScreen);
                 break;
@@ -101,10 +105,14 @@ public class DeadLine extends Game {
         }
     }
 
-    public enum ScreenKey {MainMenu, Cutscene, Hub, Combat, GameOver, Config}
+    public enum ScreenKey {MainMenu, Cutscene, Hub, Combat, GameOver, Config, Map}
 
     public ConfigScreen getConfigScreen() {
         return configScreen;
+    }
+
+    public MapScreen getMapScreen() {
+        return mapScreen;
     }
 
     @Override
