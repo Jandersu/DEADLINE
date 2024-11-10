@@ -19,6 +19,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class MinigameScreen implements Screen {
@@ -49,7 +50,7 @@ public class MinigameScreen implements Screen {
 
         this.game = game;
 
-        stage = new Stage(new ScreenViewport());
+        stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
         Gdx.input.setInputProcessor(stage);
         buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
@@ -100,6 +101,7 @@ public class MinigameScreen implements Screen {
     @Override
     public void render(float delta) {
         // Draw your application here.
+        music.setVolume(Settings.volumeMusica);
         input();
         logic();
         draw(delta);
@@ -144,10 +146,10 @@ public class MinigameScreen implements Screen {
 
                 // Diferenciar com base no tamanho da ficha
                 if (fichaSprite.getWidth() > 1) {  // Supondo que fichas boas são maiores
-                    fichaBoaSound.play(.3f);
+                    fichaBoaSound.play(Settings.volumeSom);
                     addScore(1); // Incrementa o placar para fichas boas
                 } else {
-                    dropSound.play(.3f);
+                    dropSound.play(Settings.volumeSom);
                     addScore(-1); // Reduz o placar para fichas normais
                 }
             }
@@ -233,6 +235,7 @@ public class MinigameScreen implements Screen {
     public void hide(){
         music.stop();
         Gdx.input.setInputProcessor(null);
+        dispose();
     }
 
     @Override

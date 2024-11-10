@@ -16,48 +16,19 @@ public class Settings {
     public static void defaultSettings(){
         // Configuracoes padrao, MEDIA
         tamanhoFonte = 1;
-        volumeSom = .3f;
-        volumeMusica = .3f;
+        volumeSom = .5f;
+        volumeMusica = .5f;
     }
 
     public static void prefSettings(){
         // Codigo das prefs
     }
 
-    /*public Settings(){ // O construtor setta os valores padrao das configuracoes do jogo. Config Medias
-        this.tamanhoFonte = 1;
-        this.volumeSom = .3f;
-        this.volumeMusica = .3f;
-    }
-
+    /*
     // Metodo que pega as configuracoes de som das preferencias e carrega nas settings.
     // Talvez deva ser no construtor ja que as prefs loadam quando o jogo começa a rodar
     // Ai o codigo de preferencia le daqui quando muda alguma coisa
     public void setSettingsPref() {
 
-    }
-
-    public float getTamanhoFonte() {
-        return tamanhoFonte;
-    }
-
-    public void setTamanhoFonte(float tamanhoFonte) {
-        this.tamanhoFonte = tamanhoFonte;
-    }
-
-    public float getVolumeSom() {
-        return volumeSom;
-    }
-
-    public void setVolumeSom(float volumeSom) {
-        this.volumeSom = volumeSom;
-    }
-
-    public float getVolumeMusica() {
-        return volumeMusica;
-    }
-
-    public void setVolumeMusica(float volumeMusica) {
-        this.volumeMusica = volumeMusica;
     }*/
 }

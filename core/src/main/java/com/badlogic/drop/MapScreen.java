@@ -99,10 +99,12 @@ public class MapScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        game.musicaPrincipal.play();
     }
 
     @Override
     public void render(float delta) {
+        game.musicaPrincipal.setVolume(Settings.volumeMusica);
         ScreenUtils.clear(Color.BLACK);
         stage.getViewport().apply();
         game.batch.setProjectionMatrix(stage.getViewport().getCamera().combined);
@@ -201,6 +203,8 @@ public class MapScreen implements Screen {
                 daviTeatro.setVisible(false);
                 daviGinasio.setVisible(false);
                 daviRU.setVisible(true);
+
+                game.musicaPrincipal.pause();
                 game.setScreen(new MinigameScreen(game));
             }
         });

@@ -81,6 +81,7 @@ public class HubScreen implements Screen {
         studyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                game.musicaPrincipal.pause();
                 game.setScreen(new Combate(game));
             }
         });
@@ -109,6 +110,7 @@ public class HubScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+        game.musicaPrincipal.play();
     }
 
     @Override
@@ -129,6 +131,7 @@ public class HubScreen implements Screen {
 
     public void logic(float delta){
         timer += delta;
+        game.musicaPrincipal.setVolume(Settings.volumeMusica);
 
         if(bobo){
             if(timer > 2f) {

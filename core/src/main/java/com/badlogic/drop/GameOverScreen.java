@@ -14,14 +14,10 @@ public class GameOverScreen implements Screen {
     final DeadLine game;
     BitmapFont font;
     BitmapFont font2;;
-    //Texture insegurancaTexture;
     Sprite insegurancaSprite;
-    Music music;
 
     public GameOverScreen(DeadLine game){
         this.game = game;
-
-        music = Gdx.audio.newMusic(Gdx.files.internal("scopofobia.mp3"));
 
         font = new BitmapFont();
         font.setColor(Color.RED);
@@ -33,21 +29,21 @@ public class GameOverScreen implements Screen {
         font2.setUseIntegerPositions(false);
         font2.getData().setScale(game.viewport.getWorldHeight()/ Gdx.graphics.getHeight()+0.003f);
 
-        //insegurancaTexture = new Texture("inseguranca_normal.png");
         insegurancaSprite = new Sprite(Assets.insegurancaNormal);
         insegurancaSprite.setSize(3,3);
     }
 
     @Override
     public void show() {
-        music.play();
+        game.musicaGameOver.play();
     }
 
     @Override
     public void render(float delta) {
+        game.musicaGameOver.setVolume(Settings.volumeMusica);
         ScreenUtils.clear(Color.BLACK);
         if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
-            music.stop();
+            game.musicaInseguranca.stop();
             game.setScreen(DeadLine.ScreenKey.MainMenu);
         }
         game.batch.begin();
@@ -78,11 +74,12 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void hide() {
-
+        game.musicaGameOver.stop();
     }
 
     @Override
     public void dispose() {
-        music.dispose();
+        font.dispose();
+        font2.dispose();
     }
 }

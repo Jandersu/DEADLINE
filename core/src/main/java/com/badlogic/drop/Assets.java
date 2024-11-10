@@ -24,6 +24,8 @@ public class Assets {
     public static Texture backgroundMapa;
 
     public static Texture barraVida;
+    public static Texture barraTexto;
+
     // Sprites do Davi
     public static TextureRegion daviNeutro;
     public static TextureRegion daviRaiva;
@@ -97,6 +99,7 @@ public class Assets {
         backgroundMapa = new Texture(Gdx.files.local("backgrounds/mapa.png"));
 
         barraVida = new Texture("Barra_Vida.png");
+        barraTexto = new Texture("Barra_Texto.png");
 
         // Carregando Texturas dos Personagens
         daviNeutro = deadlineAtlas.findRegion("Davi_neutro");
@@ -161,6 +164,7 @@ public class Assets {
         backgroundSaida.dispose();
         backgroundMapa.dispose();
         barraVida.dispose();
+        barraTexto.dispose();
         deadlineAtlas.dispose();
     }
 }

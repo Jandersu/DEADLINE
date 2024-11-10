@@ -30,7 +30,6 @@ public class Combate implements Screen{
     Sound danoDaviSound;
     Sound tiroSound;
     Sound danoSound;
-    Music music;
     Sprite daviSprite;
     Sprite insegurancaSprite;
     Sprite daviTiroSprite;
@@ -72,8 +71,6 @@ public class Combate implements Screen{
         tiroSound = Gdx.audio.newSound(Gdx.files.internal("tiro.mp3"));
         danoSound = Gdx.audio.newSound(Gdx.files.internal("dano.mp3"));
 
-        music = Gdx.audio.newMusic(Gdx.files.internal("scopofobia.mp3"));
-
         daviSprite = new Sprite(Assets.daviMedo); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite
 
@@ -89,9 +86,6 @@ public class Combate implements Screen{
         fichaRectangle = new Rectangle();
         tiroRectangle  = new Rectangle();
 
-        music.setLooping(true);
-        music.setVolume(.3f);
-
         font = new BitmapFont();
         font.setColor(Color.WHITE);
         font.setUseIntegerPositions(false);
@@ -100,7 +94,8 @@ public class Combate implements Screen{
 
     @Override
     public void show(){
-        music.play();
+        game.musicaInseguranca.play();
+        game.musicaPrincipal.stop();
     }
 
     @Override
@@ -131,9 +126,6 @@ public class Combate implements Screen{
         } else if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE)){
             createTiro();
             tiroSound.play(.3f);// Create a ficha
-        }
-        else if (Gdx.input.isKeyPressed(Input.Keys.E)) {
-            game.setScreen(new GameOverScreen(game));
         }
     }
 
@@ -168,9 +160,7 @@ public class Combate implements Screen{
                 danoDaviSound.play(.3f);
                 vida -= 1;
                 if(vida <= 0){
-                    music.stop();
-                    game.setScreen(new GameOverScreen(game));;
-                    dispose();
+                    game.setScreen(new GameOverScreen(game));
                 }
             }
         }
@@ -291,6 +281,9 @@ public class Combate implements Screen{
 
     @Override
     public void hide(){
+        Gdx.input.setInputProcessor(null);
+        game.musicaInseguranca.stop();
+        dispose();
     }
 
     @Override
@@ -306,7 +299,6 @@ public class Combate implements Screen{
     @Override
     public void dispose() {
         danoDaviSound.dispose();
-        music.dispose();
         tiroSound.dispose();
         danoSound.dispose();
         tiroSound.dispose();

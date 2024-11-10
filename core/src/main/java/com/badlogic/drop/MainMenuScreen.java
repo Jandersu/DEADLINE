@@ -17,7 +17,6 @@ public class MainMenuScreen implements Screen {
     final DeadLine game;
     DeadLine.ScreenKey myKey;
     Stage stage;
-    //int teste = 0;
 
     public MainMenuScreen(final DeadLine game, DeadLine.ScreenKey myKey) {
         this.game = game;
@@ -25,7 +24,7 @@ public class MainMenuScreen implements Screen {
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
 
 
-        CriarBotao botaoJogar = new CriarBotao("NOVO JOGO", Assets.buttonAtlas);
+        CriarBotao botaoJogar = new CriarBotao("JOGAR", Assets.buttonAtlas);
         TextButton jogarBotao = botaoJogar.getBotao();
 
         CriarBotao botaoConfig = new CriarBotao("OPCOES", Assets.buttonAtlas);
@@ -104,6 +103,7 @@ public class MainMenuScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
+
         stage.getViewport().apply();
         game.batch.setProjectionMatrix(stage.getViewport().getCamera().combined);
 
@@ -121,7 +121,8 @@ public class MainMenuScreen implements Screen {
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
-        //teste += 1;
+        game.musicaMenu.play();
+        game.musicaPrincipal.pause();
     }
 
     @Override

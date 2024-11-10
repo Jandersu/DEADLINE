@@ -95,6 +95,8 @@ public class ConfigScreen implements Screen {
     @Override
     public void render(float delta) {
         ScreenUtils.clear(Color.BLACK);
+        game.musicaPrincipal.setVolume(Settings.volumeMusica);
+        game.musicaMenu.setVolume(Settings.volumeMusica);
         stage.getViewport().apply();
 
         stage.act(delta);
@@ -142,7 +144,7 @@ public class ConfigScreen implements Screen {
         somMedio.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Settings.volumeSom = 0.3f;
+                Settings.volumeSom = 0.5f;
                 teste.play(Settings.volumeSom);
             }
             @Override
@@ -190,7 +192,7 @@ public class ConfigScreen implements Screen {
         musicaMedia.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Settings.volumeMusica = 0.3f;
+                Settings.volumeMusica = 0.5f;
             }
             @Override
             public void enter(InputEvent event, float x, float y, int pointer, Actor fromActor) {

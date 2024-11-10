@@ -3,6 +3,7 @@ package com.badlogic.drop;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -24,6 +25,11 @@ public class DeadLine extends Game {
     public BitmapFont font;
     public FitViewport viewport;
     public SpriteBatch batch;
+
+    public Music musicaPrincipal; // Musica principal do jogo
+    public Music musicaMenu; // Musica que toca na MainMenuScreen
+    public Music musicaInseguranca; // Musica que toca quando a Inseguranca aparece, normalmente em combates
+    public Music musicaGameOver; // Musica que toca quando a Inseguranca derrota o Davi num combate
 
     //variaveis cutscene
     private final String[] textoCutscene1 = {"Era uma vez", "um menino chamado Davi", ":O"};
@@ -51,6 +57,21 @@ public class DeadLine extends Game {
         //gameOverScreen = new GameOverScreen(this);
         configScreen = new ConfigScreen(this, ScreenKey.Config);
         mapScreen = new MapScreen(this, ScreenKey.Map);
+
+        musicaPrincipal = Gdx.audio.newMusic(Gdx.files.local("music_cutscene.mp3"));
+        musicaPrincipal.setVolume(Settings.volumeMusica);
+        musicaPrincipal.setLooping(true);
+
+        musicaMenu = Gdx.audio.newMusic(Gdx.files.local("musica_menu.mp3"));
+        musicaMenu.setVolume(Settings.volumeMusica);
+        musicaMenu.setLooping(true);
+
+        musicaInseguranca = Gdx.audio.newMusic(Gdx.files.internal("escopofobia.mp3"));
+        musicaInseguranca.setVolume(Settings.volumeMusica);
+        musicaInseguranca.setLooping(true);
+
+        musicaGameOver = Gdx.audio.newMusic(Gdx.files.internal("music_gameover.mp3"));
+        musicaGameOver.setVolume(Settings.volumeMusica);
 
         setScreen(ScreenKey.MainMenu);
 
@@ -123,5 +144,9 @@ public class DeadLine extends Game {
         hubScreen.dispose();
         //combatScreen.dispose();
         //gameOverScreen.dispose();
+        musicaPrincipal.dispose();
+        musicaMenu.dispose();
+        musicaInseguranca.dispose();
+        musicaGameOver.dispose();
     }
 }

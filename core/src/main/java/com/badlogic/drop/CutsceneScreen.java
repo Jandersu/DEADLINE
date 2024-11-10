@@ -47,10 +47,9 @@ public class CutsceneScreen implements Screen {
 
         font = new BitmapFont(Gdx.files.internal("fontes/cut.fnt"));
 
-        text = new Label("", new Label.LabelStyle(font, Color.BLACK));
+        text = new Label("", new Label.LabelStyle(font, Color.WHITE));
 
-        Texture caixaTexture = new Texture(Gdx.files.internal("barra_vida.png"));
-        caixaDialogo = new Image(caixaTexture);
+        caixaDialogo = new Image(Assets.barraTexto);
         caixaDialogo.setColor(Color.WHITE);
 
         container = new Container<Label>(text);
@@ -66,7 +65,8 @@ public class CutsceneScreen implements Screen {
 
     @Override
     public void show() {
-        musica.play(.2f);
+        game.musicaMenu.stop();
+        game.musicaPrincipal.play();
         Gdx.input.setInputProcessor(stage);
         cutsceneTimer = 0;
         textoAtual = 0;
@@ -98,6 +98,7 @@ public class CutsceneScreen implements Screen {
         float delta = Gdx.graphics.getDeltaTime();
         cutsceneTimer += delta;
         tempoDigitar += delta;
+        game.musicaPrincipal.setVolume(Settings.volumeMusica);
 
         float velocidadeDigitar = 0.05f;
 
@@ -105,7 +106,7 @@ public class CutsceneScreen implements Screen {
             tamanhoTexto++;
             text.setText(textoCompleto.substring(0, tamanhoTexto));
             tempoDigitar = 0;
-            teclando.play(.3f);
+            teclando.play(Settings.volumeSom);
         }
 
 
@@ -166,7 +167,7 @@ public class CutsceneScreen implements Screen {
 
     @Override
     public void dispose() {
-        //stage.dispose();
+        stage.dispose();
         font.dispose();
         teclando.dispose();
         musica.dispose();
