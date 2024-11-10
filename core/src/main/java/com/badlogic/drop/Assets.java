@@ -22,6 +22,7 @@ public class Assets {
     public static Texture backgroundChegada;
     public static Texture backgroundSaida;
     public static Texture backgroundMapa;
+    public static Texture backgroundCombate;
 
     public static Texture barraVida;
     public static Texture barraTexto;
@@ -97,6 +98,7 @@ public class Assets {
         backgroundChegada = new Texture(Gdx.files.local("backgrounds/chegada.jpg"));
         backgroundSaida = new Texture(Gdx.files.local("backgrounds/saida.jpg"));
         backgroundMapa = new Texture(Gdx.files.local("backgrounds/mapa.png"));
+        backgroundCombate = new Texture(Gdx.files.local("backgrounds/combate.png"));
 
         barraVida = new Texture("Barra_Vida.png");
         barraTexto = new Texture("Barra_Texto.png");
@@ -163,6 +165,7 @@ public class Assets {
         backgroundChegada.dispose();
         backgroundSaida.dispose();
         backgroundMapa.dispose();
+        backgroundCombate.dispose();
         barraVida.dispose();
         barraTexto.dispose();
         deadlineAtlas.dispose();

@@ -53,7 +53,7 @@ public class GameOverScreen implements Screen {
         insegurancaSprite.draw(game.batch);
         insegurancaSprite.setPosition(worldWidth/2 - 1.4f,worldHeight-3);
         font.draw(game.batch, "GAME OVER", 3.4f, worldHeight - 2f);
-        font2.draw(game.batch, "Pressione ESPAÇO botao \n    para voltar ao Menu", 3.1f, worldHeight - 2.5f);
+        font2.draw(game.batch, "Pressione ESPAÇO para \n       voltar ao Menu", 3.1f, worldHeight - 2.5f);
         game.batch.end();
     }
 

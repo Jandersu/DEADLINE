@@ -5,6 +5,7 @@ DeadLineAtlas/DeadLineAtlas.atlas
 DeadLineAtlas/DeadLineAtlas.png
 backgrounds/biblioteca.jpg
 backgrounds/chegada.jpg
+backgrounds/combate.png
 backgrounds/espiral.png
 backgrounds/facul.jpg
 backgrounds/ginasio.jpg

@@ -209,7 +209,7 @@ public class Combate implements Screen{
     }
 
     private void draw(){
-        ScreenUtils.clear(Color.DARK_GRAY);
+        ScreenUtils.clear(Color.BLACK);
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 
@@ -217,11 +217,11 @@ public class Combate implements Screen{
         float worldWidth = game.viewport.getWorldWidth();
         float worldHeight = game.viewport.getWorldHeight();
 
+        game.batch.draw(Assets.backgroundCombate, 0, 0, worldWidth, worldHeight);
         // draw stuff in here
         // 100 pixels = 1 meter
         // the drawing order is the code order
 
-        //game.batch.draw(backgroundTexture2, 0, 0, worldWidth, worldHeight); // draw the background
         daviSprite.draw(game.batch);
         //daviSprite.setPosition(4,0);
         insegurancaSprite.draw(game.batch);
