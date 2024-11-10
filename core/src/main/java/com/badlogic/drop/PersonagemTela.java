@@ -18,8 +18,8 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 public class PersonagemTela implements Screen {
     final DeadLine game;
     Image mapButton;
-    Sprite personagemSprite;
-    Sprite exclamacaoSprite;
+    Image personagemSprite;
+    Image exclamacaoSprite;
     Texture backGround;
     Stage stage;
     int personagem;
@@ -31,11 +31,28 @@ public class PersonagemTela implements Screen {
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
 
         this.backGround = backGround;
-        personagemSprite = new Sprite(personagemTexture);
-        personagemSprite.setSize(1, 1);
+        personagemSprite = new Image(personagemTexture);
+        stage.addActor(personagemSprite);
+        personagemSprite.setX(768);
 
-        exclamacaoSprite = new Sprite(Assets.exclaimIcon);
-        exclamacaoSprite.setSize(1, 1);
+        exclamacaoSprite = new Image(Assets.exclaimIcon);
+        stage.addActor(exclamacaoSprite);
+        exclamacaoSprite.setPosition(personagemSprite.getX(), personagemSprite.getY()+32);
+
+        personagemSprite.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("Oi");
+            }
+        });
+
+        exclamacaoSprite.addListener(new ClickListener() {
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+                System.out.println("!");
+            }
+        });
+
 
         mapButton = new Image(Assets.mapIcon);
 
@@ -71,7 +88,7 @@ public class PersonagemTela implements Screen {
 
         game.batch.draw(backGround, 0, 0, worldWidth, worldHeight); // draw the background
 
-        personagemSprite.setPosition(768, 0);
+        /*personagemSprite.setPosition(768, 0);
 
         personagemSprite.draw(game.batch);
 
@@ -80,7 +97,7 @@ public class PersonagemTela implements Screen {
             personagemSprite.getY() + personagemSprite.getHeight()
         );
 
-        exclamacaoSprite.draw(game.batch);
+        exclamacaoSprite.draw(game.batch);*/
 
         game.batch.end();
 
