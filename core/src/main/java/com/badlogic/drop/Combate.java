@@ -209,7 +209,7 @@ public class Combate implements Screen{
     }
 
     private void draw(){
-        ScreenUtils.clear(Color.GRAY);
+        ScreenUtils.clear(Color.DARK_GRAY);
         game.viewport.apply();
         game.batch.setProjectionMatrix(game.viewport.getCamera().combined);
 

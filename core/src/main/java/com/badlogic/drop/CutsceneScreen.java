@@ -32,7 +32,6 @@ public class CutsceneScreen implements Screen {
     private float tempoDigitar = 0f;
 
     Sound teclando;
-    Sound musica;
 
     public CutsceneScreen(final DeadLine game, DeadLine.ScreenKey cutscene, String[] texto, Texture imagemBackground) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
         this.game = game;
@@ -41,7 +40,6 @@ public class CutsceneScreen implements Screen {
         stage.addActor(image);
 
         teclando = Gdx.audio.newSound(Gdx.files.internal("teclando.mp3"));
-        musica = Gdx.audio.newSound(Gdx.files.internal("music_cutscene.mp3"));
 
         textos = texto;
 
@@ -60,7 +58,6 @@ public class CutsceneScreen implements Screen {
 
         stage.addActor(caixaDialogo);
         stage.addActor(container);
-        //container.addAction(Actions.parallel(Actions.moveTo(100 , 300, 1.0f), Actions.scaleTo(3f, 3f, 2.0f)));
     }
 
     @Override
@@ -120,7 +117,6 @@ public class CutsceneScreen implements Screen {
                 text.setText("");
 
                 //a cada novo texto, o container vai se "adaptar"
-                container.setSize(text.getWidth(), text.getHeight());
                 container.setOrigin(container.getWidth() / 2, container.getHeight() / 2);
                 container.setPosition(
                     (stage.getViewport().getWorldWidth() - container.getWidth()) / 2,
@@ -130,7 +126,6 @@ public class CutsceneScreen implements Screen {
                 updateCaixaDialogo();
             }
             else {
-                musica.stop();
                 teclando.stop();
                 game.setScreen(DeadLine.ScreenKey.Hub);
                 // Em diferentes situacoes a tela de cutscene vai para outras telas
@@ -170,7 +165,6 @@ public class CutsceneScreen implements Screen {
         stage.dispose();
         font.dispose();
         teclando.dispose();
-        musica.dispose();
         caixaDialogo.remove();
         image.remove();
     }
