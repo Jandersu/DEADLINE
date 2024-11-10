@@ -170,7 +170,7 @@ public class MapScreen implements Screen {
                 daviTeatro.setVisible(false);
                 daviGinasio.setVisible(false);
                 daviRU.setVisible(false);
-                System.out.println("Biblioteca. Implementar cutscene. Implementar tela no futuro.");
+                game.setScreen(DeadLine.ScreenKey.telaJuca);
             }
         });
         teatroButton.addListener(new ClickListener() {
@@ -181,7 +181,7 @@ public class MapScreen implements Screen {
                 daviTeatro.setVisible(true);
                 daviGinasio.setVisible(false);
                 daviRU.setVisible(false);
-                System.out.println("Teatro. Implementar cutscene. Implementar tela no futuro.");
+                game.setScreen(DeadLine.ScreenKey.telaYuri);
             }
         });
         ginasioButton.addListener(new ClickListener() {
@@ -192,7 +192,7 @@ public class MapScreen implements Screen {
                 daviTeatro.setVisible(false);
                 daviGinasio.setVisible(true);
                 daviRU.setVisible(false);
-                System.out.println("Ginasio. Implementar cutscene. Implementar tela no futuro.");
+                game.setScreen(DeadLine.ScreenKey.telaThales);
             }
         });
         ruButton.addListener(new ClickListener() {

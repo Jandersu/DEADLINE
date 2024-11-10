@@ -38,7 +38,7 @@ public class MainMenuScreen implements Screen {
         jogarBotao.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.setScreen(DeadLine.ScreenKey.Cutscene);
+                game.setScreen(new CutsceneScreen(game, DeadLine.ScreenKey.Cutscene, Dialogos.textoCutsceneInicial, Assets.backgroundCutsceneTeste,1));
                 //game.setScreen(DeadLine.ScreenKey.Hub);
             }
 

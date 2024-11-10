@@ -54,9 +54,9 @@ public class MinigameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
         buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
 
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.mp3"));
-        fichaBoaSound = Gdx.audio.newSound(Gdx.files.internal("rupee.mp3"));
-        music = Gdx.audio.newMusic(Gdx.files.internal("musicru.mp3"));
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("sounds-musics/drop.mp3"));
+        fichaBoaSound = Gdx.audio.newSound(Gdx.files.internal("sounds-musics/rupee.mp3"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds-musics/musicru.mp3"));
 
         daviSprite = new Sprite(Assets.daviNeutro); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite

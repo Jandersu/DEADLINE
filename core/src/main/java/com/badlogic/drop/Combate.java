@@ -67,9 +67,9 @@ public class Combate implements Screen{
 
         backgroundTexture2 = new Texture("rupixel.png");
 
-        danoDaviSound = Gdx.audio.newSound(Gdx.files.internal("danoDavi.mp3"));
-        tiroSound = Gdx.audio.newSound(Gdx.files.internal("tiro.mp3"));
-        danoSound = Gdx.audio.newSound(Gdx.files.internal("dano.mp3"));
+        danoDaviSound = Gdx.audio.newSound(Gdx.files.internal("sounds-musics/danoDavi.mp3"));
+        tiroSound = Gdx.audio.newSound(Gdx.files.internal("sounds-musics/tiro.mp3"));
+        danoSound = Gdx.audio.newSound(Gdx.files.internal("sounds-musics/dano.mp3"));
 
         daviSprite = new Sprite(Assets.daviMedo); // initialize the sprite based on the texture
         daviSprite.setSize(1, 1); // define the size of the sprite

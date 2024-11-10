@@ -30,18 +30,20 @@ public class CutsceneScreen implements Screen {
     private String textoCompleto;
     private int tamanhoTexto = 0;
     private float tempoDigitar = 0f;
+    private int primeiraVez=0;
 
     Sound teclando;
 
-    public CutsceneScreen(final DeadLine game, DeadLine.ScreenKey cutscene, String[] texto, Texture imagemBackground) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
+    public CutsceneScreen(final DeadLine game, DeadLine.ScreenKey cutscene, String[] texto, Texture imagemBackground, int primeiraVez) { // Aqui teria o parâmetro "cinematica", um inteiro sei lá
         this.game = game;
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
         image = new Image(imagemBackground);
         stage.addActor(image);
 
-        teclando = Gdx.audio.newSound(Gdx.files.internal("teclando.mp3"));
+        teclando = Gdx.audio.newSound(Gdx.files.internal("sounds-musics/teclando.mp3"));
 
         textos = texto;
+        this.primeiraVez = primeiraVez;
 
         font = new BitmapFont(Gdx.files.internal("fontes/cut.fnt"));
 
@@ -127,7 +129,12 @@ public class CutsceneScreen implements Screen {
             }
             else {
                 teclando.stop();
-                game.setScreen(DeadLine.ScreenKey.Hub);
+                if(primeiraVez == 1){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenOnibus);
+                }
+                else {
+                    game.setScreen(DeadLine.ScreenKey.Hub);
+                }
                 // Em diferentes situacoes a tela de cutscene vai para outras telas
             }
         }

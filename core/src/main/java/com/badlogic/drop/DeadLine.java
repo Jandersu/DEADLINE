@@ -16,6 +16,17 @@ public class DeadLine extends Game {
     // Instanciando as telas do jogo
     private MainMenuScreen mainMenuScreen;
     private CutsceneScreen cutsceneScreen;
+    private CutsceneScreen cutsceneScreenOnibus;
+    private CutsceneScreen cutsceneScreenJuca;
+    private CutsceneScreen cutsceneScreenThales;
+    private CutsceneScreen cutsceneScreenYuri;
+    private CutsceneScreen cutsceneScreenProfessor;
+
+    private PersonagemTela telaJuca;
+    private PersonagemTela telaThales;
+    private PersonagemTela telaYuri;
+    private PersonagemTela telaProfessor;
+
     private HubScreen hubScreen;
     //private Combate combatScreen;
     //private GameOverScreen gameOverScreen;
@@ -30,10 +41,6 @@ public class DeadLine extends Game {
     public Music musicaMenu; // Musica que toca na MainMenuScreen
     public Music musicaInseguranca; // Musica que toca quando a Inseguranca aparece, normalmente em combates
     public Music musicaGameOver; // Musica que toca quando a Inseguranca derrota o Davi num combate
-
-    //variaveis cutscene
-    private final String[] textoCutscene1 = {"Era uma vez", "um menino chamado Davi", ":O"};
-    //private final Image imagemBackground1 = new Image(Assets.backgroundCutsceneTeste);
 
     // Variável prefs para controle das preferências de usuário.
     //private Preferences prefs;
@@ -51,26 +58,38 @@ public class DeadLine extends Game {
 
         // Inicializando as telas
         mainMenuScreen = new MainMenuScreen(this, ScreenKey.MainMenu);
-        cutsceneScreen = new CutsceneScreen(this, ScreenKey.Cutscene, textoCutscene1, Assets.backgroundCutsceneTeste);
+
+        cutsceneScreen = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneInicial, Assets.backgroundCutsceneTeste,0);
+        cutsceneScreenOnibus = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneOnibus, Assets.backgroundChegada, 0);
+        cutsceneScreenJuca = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneJuca, Assets.backgroundBiblioteca, 0);
+        cutsceneScreenThales = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneThales, Assets.backgroundTeatro, 0);
+        cutsceneScreenYuri = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneYuri, Assets.backgroundGinasio, 0);
+        cutsceneScreenProfessor = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneProfessor, Assets.backgroundSala, 0);
+
+        telaJuca = new PersonagemTela(this, Assets.jucaNeutro, Assets.backgroundBiblioteca, 0);
+        telaThales = new PersonagemTela(this, Assets.thalesNeutro, Assets.backgroundGinasio, 1);
+        telaYuri = new PersonagemTela(this, Assets.yuriNeutro, Assets.backgroundTeatro, 2);
+        telaProfessor = new PersonagemTela(this, Assets.professorTexture, Assets.backgroundSala, 3);
+
         hubScreen = new HubScreen(this, ScreenKey.Hub);
         //combatScreen = new Combate(this);
         //gameOverScreen = new GameOverScreen(this);
         configScreen = new ConfigScreen(this, ScreenKey.Config);
         mapScreen = new MapScreen(this, ScreenKey.Map);
 
-        musicaPrincipal = Gdx.audio.newMusic(Gdx.files.local("music_cutscene.mp3"));
+        musicaPrincipal = Gdx.audio.newMusic(Gdx.files.local("sounds-musics/music_cutscene.mp3"));
         musicaPrincipal.setVolume(Settings.volumeMusica);
         musicaPrincipal.setLooping(true);
 
-        musicaMenu = Gdx.audio.newMusic(Gdx.files.local("musica_menu.mp3"));
+        musicaMenu = Gdx.audio.newMusic(Gdx.files.local("sounds-musics/musica_menu.mp3"));
         musicaMenu.setVolume(Settings.volumeMusica);
         musicaMenu.setLooping(true);
 
-        musicaInseguranca = Gdx.audio.newMusic(Gdx.files.internal("escopofobia.mp3"));
+        musicaInseguranca = Gdx.audio.newMusic(Gdx.files.internal("sounds-musics/escopofobia.mp3"));
         musicaInseguranca.setVolume(Settings.volumeMusica);
         musicaInseguranca.setLooping(true);
 
-        musicaGameOver = Gdx.audio.newMusic(Gdx.files.internal("music_gameover.mp3"));
+        musicaGameOver = Gdx.audio.newMusic(Gdx.files.internal("sounds-musics/music_gameover.mp3"));
         musicaGameOver.setVolume(Settings.volumeMusica);
 
         setScreen(ScreenKey.MainMenu);
@@ -100,13 +119,40 @@ public class DeadLine extends Game {
 
     }
 
-    public void setScreen(ScreenKey screenKey){
+    public void setScreen(ScreenKey screenKey) {
         switch(screenKey) {
             case MainMenu:
                 setScreen(mainMenuScreen);
                 break;
             case Cutscene:
                 setScreen(cutsceneScreen);
+                break;
+            case cutsceneScreenOnibus:
+                setScreen(cutsceneScreenOnibus);
+                break;
+            case cutsceneScreenJuca:
+                setScreen(cutsceneScreenJuca);
+                break;
+            case cutsceneScreenThales:
+                setScreen(cutsceneScreenThales);
+                break;
+            case cutsceneScreenYuri:
+                setScreen(cutsceneScreenYuri);
+                break;
+            case telaJuca:
+                setScreen(telaJuca);
+                break;
+            case telaThales:
+                setScreen(telaThales);
+                break;
+            case telaYuri:
+                setScreen(telaYuri);
+                break;
+            case telaProfessor:
+                setScreen(telaProfessor);
+                break;
+            case cutsceneScreenProfessor:
+                setScreen(cutsceneScreenProfessor);
                 break;
             case Hub:
                 setScreen(hubScreen);
@@ -126,7 +172,7 @@ public class DeadLine extends Game {
         }
     }
 
-    public enum ScreenKey {MainMenu, Cutscene, Hub, Combat, GameOver, Config, Map}
+    public enum ScreenKey {MainMenu, Cutscene, cutsceneScreenOnibus, cutsceneScreenJuca, cutsceneScreenThales, cutsceneScreenYuri, cutsceneScreenProfessor, telaJuca, telaThales, telaYuri, telaProfessor,Hub, Combat, GameOver, Config, Map}
 
     public ConfigScreen getConfigScreen() {
         return configScreen;
