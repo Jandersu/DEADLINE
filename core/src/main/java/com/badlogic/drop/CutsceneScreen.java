@@ -109,7 +109,7 @@ public class CutsceneScreen implements Screen {
         }
 
 
-        if (cutsceneTimer >= 2f) {
+        if (cutsceneTimer >= 3f) {
             cutsceneTimer = 0;
 
             textoAtual++;
@@ -133,6 +133,8 @@ public class CutsceneScreen implements Screen {
                     game.setScreen(DeadLine.ScreenKey.cutsceneScreenOnibus);
                 } else if (primeiraVez == 2) {
                     game.setScreen(DeadLine.ScreenKey.combate);
+                } else if(primeiraVez == 3){
+                    game.setScreen(DeadLine.ScreenKey.MainMenu);
                 } else {
                     game.setScreen(DeadLine.ScreenKey.Hub);
                 }

@@ -21,6 +21,7 @@ public class DeadLine extends Game {
     private CutsceneScreen cutsceneScreenThales;
     private CutsceneScreen cutsceneScreenYuri;
     private CutsceneScreen cutsceneScreenProfessor;
+    private CutsceneScreen cutsceneScreenFim;
 
     private PersonagemTela telaJuca;
     private PersonagemTela telaThales;
@@ -64,10 +65,11 @@ public class DeadLine extends Game {
 
         cutsceneScreen = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneInicial, Assets.backgroundCutsceneTeste,0);
         cutsceneScreenOnibus = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneOnibus, Assets.backgroundChegada, 0);
-        cutsceneScreenJuca = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneJuca, Assets.backgroundBiblioteca, 0);
-        cutsceneScreenThales = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneThales, Assets.backgroundTeatro, 0);
-        cutsceneScreenYuri = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneYuri, Assets.backgroundGinasio, 0);
-        cutsceneScreenProfessor = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneProfessor, Assets.backgroundSala, 2);
+        cutsceneScreenJuca = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneJuca, Assets.backgroundBiblioteca, 0);
+        cutsceneScreenThales = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneThales, Assets.backgroundGinasio, 0);
+        cutsceneScreenYuri = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneYuri, Assets.backgroundTeatro, 0);
+        cutsceneScreenProfessor = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneSala, Assets.backgroundSala, 2);
+        cutsceneScreenFim = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.textoCutsceneFim, Assets.backgroundSala, 3);
 
         telaJuca = new PersonagemTela(this, Assets.jucaNeutro, Assets.backgroundBiblioteca, 0);
         telaThales = new PersonagemTela(this, Assets.thalesNeutro, Assets.backgroundGinasio, 1);
@@ -145,6 +147,9 @@ public class DeadLine extends Game {
             case cutsceneScreenYuri:
                 setScreen(cutsceneScreenYuri);
                 break;
+            case cutsceneScreenFim:
+                setScreen(cutsceneScreenFim);
+                break;
             case telaJuca:
                 setScreen(telaJuca);
                 break;
@@ -178,7 +183,7 @@ public class DeadLine extends Game {
         }
     }
 
-    public enum ScreenKey {MainMenu, Cutscene, cutsceneScreenOnibus, cutsceneScreenJuca, cutsceneScreenThales, cutsceneScreenYuri, cutsceneScreenProfessor, telaJuca, telaThales, telaYuri, telaProfessor,Hub, combate, GameOver, Config, Map}
+    public enum ScreenKey {MainMenu, Cutscene, cutsceneScreenOnibus, cutsceneScreenJuca, cutsceneScreenThales, cutsceneScreenYuri, cutsceneScreenProfessor, cutsceneScreenFim,telaJuca, telaThales, telaYuri, telaProfessor,Hub, combate, GameOver, Config, Map}
 
     public ConfigScreen getConfigScreen() {
         return configScreen;

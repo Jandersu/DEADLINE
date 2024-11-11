@@ -20,6 +20,10 @@ buttons/checked-button.png
 buttons/down-button.png
 buttons/hover-button.png
 buttons/up-button.png
+deadline128.png
+deadline16.png
+deadline32.png
+deadline64.png
 fichaboa.png
 ficharu.png
 fontes/LBOmMoDw3kkW6AAPXzzAYSih.ttf_0.png

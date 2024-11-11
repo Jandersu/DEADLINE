@@ -54,10 +54,10 @@ public class PersonagemTela implements Screen {
                     game.setScreen(DeadLine.ScreenKey.cutsceneScreenJuca);
                 }
                 else if(personagem == 1){
-                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenYuri);
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenThales);
                 }
                 else if(personagem == 2){
-                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenThales);
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenYuri);
                 }
                 else if(personagem == 3){
                     game.setScreen(DeadLine.ScreenKey.cutsceneScreenProfessor);
@@ -72,17 +72,16 @@ public class PersonagemTela implements Screen {
                     game.setScreen(DeadLine.ScreenKey.cutsceneScreenJuca);
                 }
                 else if(personagem == 1){
-                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenYuri);
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenThales);
                 }
                 else if(personagem == 2){
-                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenThales);
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenYuri);
                 }
                 else if(personagem == 3){
                     game.setScreen(DeadLine.ScreenKey.cutsceneScreenProfessor);
                 }
             }
         });
-
 
         mapButton = new Image(Assets.mapIcon);
 

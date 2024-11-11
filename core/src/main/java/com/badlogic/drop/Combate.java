@@ -48,8 +48,8 @@ public class Combate implements Screen{
     Rectangle insegurancaRectangle;
     Rectangle tiroRectangle;
 
-    int vida = 5;
-    int vidaInseguranca = 100;
+    int vida = 10;
+    int vidaInseguranca = 50;
     BitmapFont font;
 
     Stage stage;
@@ -179,8 +179,9 @@ public class Combate implements Screen{
                 danoTimer = 0f;
                 insegurancaSprite.setRegion(Assets.insegurancaDano);
                 vidaInseguranca -= 1;
-                if(vidaInseguranca<100)
-                    vidaInseguranca = 0;
+                if(vidaInseguranca<=0){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenFim);
+                }
                 danoSound.play(.3f);
             }
         }
