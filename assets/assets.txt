@@ -1,8 +1,8 @@
 .gitkeep
 Barra_Texto.png
 Barra_Vida.png
-DeadLineAtlas/DeadLineAtlas.atlas
-DeadLineAtlas/DeadLineAtlas.png
+DeadLineAtlas.atlas
+DeadLineAtlas.png
 backgrounds/biblioteca.jpg
 backgrounds/chegada.jpg
 backgrounds/combate.png
@@ -20,6 +20,8 @@ buttons/checked-button.png
 buttons/down-button.png
 buttons/hover-button.png
 buttons/up-button.png
+deadatlas/DeadLineAtlas.atlas
+deadatlas/DeadLineAtlas.png
 deadline128.png
 deadline16.png
 deadline32.png

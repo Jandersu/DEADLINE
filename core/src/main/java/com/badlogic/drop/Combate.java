@@ -94,6 +94,7 @@ public class Combate implements Screen{
 
     @Override
     public void show(){
+
         game.musicaInseguranca.play();
         game.musicaPrincipal.stop();
     }

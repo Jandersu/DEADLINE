@@ -81,7 +81,7 @@ public class HubScreen implements Screen {
         studyButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                game.musicaPrincipal.pause();
+                //game.musicaPrincipal.pause();
                 game.setScreen(DeadLine.ScreenKey.telaProfessor);
             }
         });

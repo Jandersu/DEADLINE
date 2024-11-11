@@ -83,7 +83,7 @@ public class Assets {
 
     public static void load() {
         buttonAtlas = new TextureAtlas(Gdx.files.local("buttons/buttons.pack"));
-        deadlineAtlas = new TextureAtlas(Gdx.files.local("DeadLineAtlas/DeadlineAtlas.atlas"));
+        deadlineAtlas = new TextureAtlas(Gdx.files.local("DeadlineAtlas.atlas"));
 
         // Carregando Texturas dos Planos de Fundo
         backgroundMainMenu = new Texture(Gdx.files.local("backgrounds/espiral.png"));
