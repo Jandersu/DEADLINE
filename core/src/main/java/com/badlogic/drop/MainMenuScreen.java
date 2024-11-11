@@ -39,7 +39,7 @@ public class MainMenuScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.setScreen(new CutsceneScreen(game, DeadLine.ScreenKey.Cutscene, Dialogos.textoCutsceneInicial, Assets.backgroundCutsceneTeste,1));
-                //game.setScreen(DeadLine.ScreenKey.Hub);
+                //game.setScreen(DeadLine.ScreenKey.combate);
             }
 
             @Override

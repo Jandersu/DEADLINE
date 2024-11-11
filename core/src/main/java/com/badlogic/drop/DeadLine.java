@@ -27,6 +27,9 @@ public class DeadLine extends Game {
     private PersonagemTela telaYuri;
     private PersonagemTela telaProfessor;
 
+    private Combate combateScreen;
+    private GameOverScreen gameOverScreen;
+
     private HubScreen hubScreen;
     //private Combate combatScreen;
     //private GameOverScreen gameOverScreen;
@@ -64,12 +67,15 @@ public class DeadLine extends Game {
         cutsceneScreenJuca = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneJuca, Assets.backgroundBiblioteca, 0);
         cutsceneScreenThales = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneThales, Assets.backgroundTeatro, 0);
         cutsceneScreenYuri = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneYuri, Assets.backgroundGinasio, 0);
-        cutsceneScreenProfessor = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneProfessor, Assets.backgroundSala, 0);
+        cutsceneScreenProfessor = new CutsceneScreen(this, ScreenKey.Cutscene, Dialogos.getTextoCutsceneProfessor, Assets.backgroundSala, 2);
 
         telaJuca = new PersonagemTela(this, Assets.jucaNeutro, Assets.backgroundBiblioteca, 0);
         telaThales = new PersonagemTela(this, Assets.thalesNeutro, Assets.backgroundGinasio, 1);
         telaYuri = new PersonagemTela(this, Assets.yuriNeutro, Assets.backgroundTeatro, 2);
         telaProfessor = new PersonagemTela(this, Assets.professorTexture, Assets.backgroundSala, 3);
+
+        combateScreen = new Combate(this);
+        gameOverScreen = new GameOverScreen(this);
 
         hubScreen = new HubScreen(this, ScreenKey.Hub);
         //combatScreen = new Combate(this);
@@ -163,16 +169,16 @@ public class DeadLine extends Game {
             case Map:
                 setScreen(mapScreen);
                 break;
-            /*case Combat:
-                setScreen(combatScreen);
+            case combate:
+                setScreen(combateScreen);
                 break;
             case GameOver:
                 setScreen(gameOverScreen);
-                break;*/
+                break;
         }
     }
 
-    public enum ScreenKey {MainMenu, Cutscene, cutsceneScreenOnibus, cutsceneScreenJuca, cutsceneScreenThales, cutsceneScreenYuri, cutsceneScreenProfessor, telaJuca, telaThales, telaYuri, telaProfessor,Hub, Combat, GameOver, Config, Map}
+    public enum ScreenKey {MainMenu, Cutscene, cutsceneScreenOnibus, cutsceneScreenJuca, cutsceneScreenThales, cutsceneScreenYuri, cutsceneScreenProfessor, telaJuca, telaThales, telaYuri, telaProfessor,Hub, combate, GameOver, Config, Map}
 
     public ConfigScreen getConfigScreen() {
         return configScreen;

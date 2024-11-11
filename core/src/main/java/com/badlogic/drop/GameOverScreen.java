@@ -15,9 +15,12 @@ public class GameOverScreen implements Screen {
     BitmapFont font;
     BitmapFont font2;;
     Sprite insegurancaSprite;
+    Combate combateScreen;
 
     public GameOverScreen(DeadLine game){
         this.game = game;
+
+        combateScreen = new Combate(game);
 
         font = new BitmapFont();
         font.setColor(Color.RED);
@@ -42,9 +45,13 @@ public class GameOverScreen implements Screen {
     public void render(float delta) {
         game.musicaGameOver.setVolume(Settings.volumeMusica);
         ScreenUtils.clear(Color.BLACK);
-        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+        if(Gdx.input.isKeyPressed(Input.Keys.ESCAPE)){
             game.musicaInseguranca.stop();
             game.setScreen(DeadLine.ScreenKey.MainMenu);
+        }
+        if(Gdx.input.isKeyPressed(Input.Keys.SPACE)){
+            game.musicaInseguranca.stop();
+            game.setScreen(combateScreen);
         }
         game.batch.begin();
         float worldWidth = game.viewport.getWorldWidth();
@@ -53,7 +60,7 @@ public class GameOverScreen implements Screen {
         insegurancaSprite.draw(game.batch);
         insegurancaSprite.setPosition(worldWidth/2 - 1.4f,worldHeight-3);
         font.draw(game.batch, "GAME OVER", 3.4f, worldHeight - 2f);
-        font2.draw(game.batch, "Pressione ESPAÇO para \n       voltar ao Menu", 3.1f, worldHeight - 2.5f);
+        font2.draw(game.batch, "Pressione ESPAÇO para continuar \n     ou ESC para voltar ao MENU", 2.6f, worldHeight - 2.5f);
         game.batch.end();
     }
 

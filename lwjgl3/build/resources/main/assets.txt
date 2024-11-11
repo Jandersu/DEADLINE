@@ -28,5 +28,16 @@ fontes/n3FT5DaAd92s6h1zbAGtupG6.ttf_0.png
 fontes/pixel.fnt
 ru.jpg
 rupixel.png
+sounds-musics/dano.mp3
+sounds-musics/danoDavi.mp3
+sounds-musics/drop.mp3
+sounds-musics/escopofobia.mp3
+sounds-musics/music_cutscene.mp3
+sounds-musics/music_gameover.mp3
+sounds-musics/musica_menu.mp3
+sounds-musics/musicru.mp3
+sounds-musics/rupee.mp3
+sounds-musics/teclando.mp3
+sounds-musics/tiro.mp3
 teclando.mp3
 tiro.mp3

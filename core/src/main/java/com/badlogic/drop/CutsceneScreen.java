@@ -131,8 +131,9 @@ public class CutsceneScreen implements Screen {
                 teclando.stop();
                 if(primeiraVez == 1){
                     game.setScreen(DeadLine.ScreenKey.cutsceneScreenOnibus);
-                }
-                else {
+                } else if (primeiraVez == 2) {
+                    game.setScreen(DeadLine.ScreenKey.combate);
+                } else {
                     game.setScreen(DeadLine.ScreenKey.Hub);
                 }
                 // Em diferentes situacoes a tela de cutscene vai para outras telas

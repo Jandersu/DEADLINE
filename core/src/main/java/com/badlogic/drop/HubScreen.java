@@ -82,7 +82,7 @@ public class HubScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 game.musicaPrincipal.pause();
-                game.setScreen(new Combate(game));
+                game.setScreen(DeadLine.ScreenKey.telaProfessor);
             }
         });
         configButton.addListener(new ClickListener() {

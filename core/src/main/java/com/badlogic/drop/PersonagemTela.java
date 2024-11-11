@@ -20,6 +20,7 @@ public class PersonagemTela implements Screen {
     Image mapButton;
     Image personagemSprite;
     Image exclamacaoSprite;
+    Image daviSprite;
     Texture backGround;
     Stage stage;
     int personagem;
@@ -31,25 +32,54 @@ public class PersonagemTela implements Screen {
         stage = new Stage(new FitViewport(game.WIDTH, game.HEIGHT));
 
         this.backGround = backGround;
+        daviSprite = new Image(Assets.daviNeutro);
+        daviSprite.setSize(100,100);
+        stage.addActor(daviSprite);
+        daviSprite.setPosition(25, 0);
+
         personagemSprite = new Image(personagemTexture);
+        personagemSprite.setSize(100,100);
         stage.addActor(personagemSprite);
-        personagemSprite.setX(768);
+        personagemSprite.setPosition(668, 0);
 
         exclamacaoSprite = new Image(Assets.exclaimIcon);
+        exclamacaoSprite.setSize(100,100);
         stage.addActor(exclamacaoSprite);
-        exclamacaoSprite.setPosition(personagemSprite.getX(), personagemSprite.getY()+32);
+        exclamacaoSprite.setPosition(personagemSprite.getX(), personagemSprite.getY()+100);
 
         personagemSprite.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("Oi");
+                if(personagem == 0){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenJuca);
+                }
+                else if(personagem == 1){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenYuri);
+                }
+                else if(personagem == 2){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenThales);
+                }
+                else if(personagem == 3){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenProfessor);
+                }
             }
         });
 
         exclamacaoSprite.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                System.out.println("!");
+                if(personagem == 0){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenJuca);
+                }
+                else if(personagem == 1){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenYuri);
+                }
+                else if(personagem == 2){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenThales);
+                }
+                else if(personagem == 3){
+                    game.setScreen(DeadLine.ScreenKey.cutsceneScreenProfessor);
+                }
             }
         });
 
